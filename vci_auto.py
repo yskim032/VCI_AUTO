@@ -3,6 +3,8 @@ from tkinter import ttk, messagebox
 from xml.etree.ElementTree import Element, SubElement, ElementTree
 import datetime
 
+# pyinstaller --onefile --noconsole vci_auto.py   
+
 class VCIXMLGenerator:
     def __init__(self):
         # 최상위 요소 생성
