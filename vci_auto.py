@@ -23,6 +23,12 @@ class VCIGeneratorGUI:
         self.root = root
         self.root.title("VCI XML Generator")
         
+        # 현재 날짜값을 저장할 변수 추가
+        self.current_date = ""
+        
+        # 모든 날짜/시간 입력 필드들을 순서대로 저장할 리스트
+        self.all_datetime_entries = []
+        
         # 윈도우 크기 설정
         window_width = 400   # 원하는 너비
         window_height = 900   # 원하는 높이
@@ -92,6 +98,64 @@ class VCIGeneratorGUI:
             entry.pack(side='left')
             setattr(self, entry_name, entry)
 
+    def create_datetime_entry(self, parent, label_text, entry_name=None):
+        """날짜/시간 입력 필드 생성 함수"""
+        frame = ttk.Frame(parent)
+        frame.pack(pady=5, fill='x')
+        
+        # 레이블
+        ttk.Label(frame, text=label_text, width=15).pack(side='left')
+        
+        # 입력 필드
+        entry = ttk.Entry(frame, width=13)
+        entry.pack(side='left')
+        
+        # 입력 필드에 이벤트 바인딩
+        entry.bind('<FocusIn>', lambda e: self.handle_entry_focus(entry))
+        entry.bind('<KeyRelease>', lambda e: self.handle_date_change(entry))
+        
+        # 전체 날짜/시간 입력 필드 리스트에 순서대로 추가
+        self.all_datetime_entries.append(entry)
+        
+        ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+        
+        if entry_name:
+            setattr(self, entry_name, entry)
+        
+        return entry
+
+    def handle_entry_focus(self, entry):
+        """입력 필드 포커스 처리"""
+        if not entry.get():
+            # 비어있는 경우 현재 날짜 자동 입력
+            if self.current_date:
+                entry.insert(0, self.current_date + " ")
+                entry.icursor(9)  # 커서를 시간 입력 위치로
+        else:
+            # 이미 값이 있는 경우 시간 부분으로 커서 이동
+            entry.icursor(9)
+
+    def handle_date_change(self, entry):
+        """날짜 변경 처리 - 현재 입력 필드 이후의 모든 필드에 새 날짜 적용"""
+        content = entry.get()
+        if len(content) >= 8:
+            new_date = content[:8]
+            if new_date != self.current_date:
+                self.current_date = new_date
+                # 현재 필드의 인덱스 찾기
+                current_index = self.all_datetime_entries.index(entry)
+                # 현재 필드 이후의 모든 필드 업데이트
+                for e in self.all_datetime_entries[current_index + 1:]:
+                    current_content = e.get()
+                    if not current_content:
+                        # 비어있는 필드는 새 날짜만 입력
+                        e.insert(0, self.current_date + " ")
+                    elif len(current_content) >= 8:
+                        # 이미 값이 있는 필드는 날짜 부분만 교체
+                        time_part = current_content[8:] if len(current_content) > 8 else " "
+                        e.delete(0, 'end')
+                        e.insert(0, self.current_date + time_part)
+
     def setup_arrival_tab(self):
         # Timeline 섹션
         timeline_frame = ttk.LabelFrame(self.arrival_tab, text="Timeline")
@@ -114,13 +178,7 @@ class VCIGeneratorGUI:
         ]
         
         for label_text, entry_name in time_fields:
-            frame = ttk.Frame(timeline_frame)
-            frame.pack(pady=5, fill='x')
-            ttk.Label(frame, text=label_text, width=15).pack(side='left')
-            entry = ttk.Entry(frame, width=13)  # YYYYMMDD HHMM
-            entry.pack(side='left')
-            setattr(self, entry_name, entry)
-            ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+            self.create_datetime_entry(timeline_frame, label_text, entry_name)
 
         # REAFORANC 드롭다운
         frame = ttk.Frame(timeline_frame)
@@ -149,42 +207,33 @@ class VCIGeneratorGUI:
         
         pilot_fields = [("From", "arr_pilot_from_entry"), ("To", "arr_pilot_to_entry")]
         for label_text, entry_name in pilot_fields:
-            frame = ttk.Frame(pilots_frame)
-            frame.pack(pady=5, fill='x')
-            ttk.Label(frame, text=label_text, width=15).pack(side='left')
-            entry = ttk.Entry(frame, width=13)  # YYYYMMDD HHMM
-            entry.pack(side='left')
-            setattr(self, entry_name, entry)
-            ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+            self.create_datetime_entry(pilots_frame, label_text, entry_name)
 
         # Towages 섹션
         towages_frame = ttk.LabelFrame(self.arrival_tab, text="Towages")
         towages_frame.pack(pady=5, fill='x', padx=10)
         
-        # 두 예인선에 대한 정보
         self.arr_tug_entries = []
         for i in range(2):
             tug_frame = ttk.LabelFrame(towages_frame, text=f"Tug {i+1}")
             tug_frame.pack(pady=5, fill='x')
             
-            tug_fields = [
-                ("From", f"arr_tug{i+1}_from_entry"),
-                ("To", f"arr_tug{i+1}_to_entry"),
-                ("Comment", f"arr_tug{i+1}_comment_entry")
-            ]
-            
             entries = {}
-            for label_text, entry_name in tug_fields:
-                frame = ttk.Frame(tug_frame)
-                frame.pack(pady=5, fill='x')
-                ttk.Label(frame, text=label_text, width=15).pack(side='left')
-                entry = ttk.Entry(frame, width=13 if label_text in ["From", "To"] else 20)  # 날짜/시간은 13, Comment는 20
-                entry.pack(side='left')
-                setattr(self, entry_name, entry)
-                entries[label_text] = entry
-                if label_text in ["From", "To"]:
-                    ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+            # From/To 필드는 datetime entry로 생성
+            self.create_datetime_entry(tug_frame, "From", f"arr_tug{i+1}_from_entry")
+            self.create_datetime_entry(tug_frame, "To", f"arr_tug{i+1}_to_entry")
             
+            # Comment 필드는 일반 entry로 생성
+            comment_frame = ttk.Frame(tug_frame)
+            comment_frame.pack(pady=5, fill='x')
+            ttk.Label(comment_frame, text="Comment", width=15).pack(side='left')
+            comment_entry = ttk.Entry(comment_frame, width=20)
+            comment_entry.pack(side='left')
+            setattr(self, f"arr_tug{i+1}_comment_entry", comment_entry)
+            
+            entries["From"] = getattr(self, f"arr_tug{i+1}_from_entry")
+            entries["To"] = getattr(self, f"arr_tug{i+1}_to_entry")
+            entries["Comment"] = comment_entry
             self.arr_tug_entries.append(entries)
 
     def setup_operations_tab(self):
@@ -214,13 +263,7 @@ class VCIGeneratorGUI:
         ]
         
         for label_text, entry_name in time_fields:
-            frame = ttk.Frame(timeline_frame)
-            frame.pack(pady=5, fill='x')
-            ttk.Label(frame, text=label_text, width=15).pack(side='left')
-            entry = ttk.Entry(frame, width=13)  # YYYYMMDD HHMM
-            entry.pack(side='left')
-            setattr(self, entry_name, entry)
-            ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+            self.create_datetime_entry(timeline_frame, label_text, entry_name)
 
         # LASCOMPBY 드롭다운
         frame = ttk.Frame(timeline_frame)
@@ -252,13 +295,7 @@ class VCIGeneratorGUI:
         ]
         
         for label_text, entry_name in time_fields:
-            frame = ttk.Frame(timeline_frame)
-            frame.pack(pady=5, fill='x')
-            ttk.Label(frame, text=label_text, width=15).pack(side='left')
-            entry = ttk.Entry(frame, width=13)  # YYYYMMDD HHMM
-            entry.pack(side='left')
-            setattr(self, entry_name, entry)
-            ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+            self.create_datetime_entry(timeline_frame, label_text, entry_name)
 
         # Draft 섹션
         draft_frame = ttk.LabelFrame(self.departure_tab, text="Draft")
@@ -279,42 +316,33 @@ class VCIGeneratorGUI:
         
         pilot_fields = [("From", "dep_pilot_from_entry"), ("To", "dep_pilot_to_entry")]
         for label_text, entry_name in pilot_fields:
-            frame = ttk.Frame(pilots_frame)
-            frame.pack(pady=5, fill='x')
-            ttk.Label(frame, text=label_text, width=15).pack(side='left')
-            entry = ttk.Entry(frame, width=13)  # YYYYMMDD HHMM
-            entry.pack(side='left')
-            setattr(self, entry_name, entry)
-            ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+            self.create_datetime_entry(pilots_frame, label_text, entry_name)
 
         # Towages 섹션
         towages_frame = ttk.LabelFrame(self.departure_tab, text="Towages")
         towages_frame.pack(pady=5, fill='x', padx=10)
         
-        # 두 예인선에 대한 정보
         self.dep_tug_entries = []
         for i in range(2):
             tug_frame = ttk.LabelFrame(towages_frame, text=f"Tug {i+1}")
             tug_frame.pack(pady=5, fill='x')
             
-            tug_fields = [
-                ("From", f"dep_tug{i+1}_from_entry"),
-                ("To", f"dep_tug{i+1}_to_entry"),
-                ("Comment", f"dep_tug{i+1}_comment_entry")
-            ]
-            
             entries = {}
-            for label_text, entry_name in tug_fields:
-                frame = ttk.Frame(tug_frame)
-                frame.pack(pady=5, fill='x')
-                ttk.Label(frame, text=label_text, width=15).pack(side='left')
-                entry = ttk.Entry(frame, width=13 if label_text in ["From", "To"] else 20)  # 날짜/시간은 13, Comment는 20
-                entry.pack(side='left')
-                setattr(self, entry_name, entry)
-                entries[label_text] = entry
-                if label_text in ["From", "To"]:
-                    ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
+            # From/To 필드는 datetime entry로 생성
+            self.create_datetime_entry(tug_frame, "From", f"dep_tug{i+1}_from_entry")
+            self.create_datetime_entry(tug_frame, "To", f"dep_tug{i+1}_to_entry")
             
+            # Comment 필드는 일반 entry로 생성
+            comment_frame = ttk.Frame(tug_frame)
+            comment_frame.pack(pady=5, fill='x')
+            ttk.Label(comment_frame, text="Comment", width=15).pack(side='left')
+            comment_entry = ttk.Entry(comment_frame, width=20)
+            comment_entry.pack(side='left')
+            setattr(self, f"dep_tug{i+1}_comment_entry", comment_entry)
+            
+            entries["From"] = getattr(self, f"dep_tug{i+1}_from_entry")
+            entries["To"] = getattr(self, f"dep_tug{i+1}_to_entry")
+            entries["Comment"] = comment_entry
             self.dep_tug_entries.append(entries)
 
     def setup_discharge_tab(self):
