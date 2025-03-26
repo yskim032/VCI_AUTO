@@ -1,0 +1,2162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Created with Liquid Studio (https://www.liquid-technologies.com) -->
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="detcode">
+        <xs:restriction base="xs:string">
+            <!-- Vessel arrival-->
+            <xs:enumeration value="VSLARR" />
+            <!-- Unused Gang time-->
+            <xs:enumeration value="UGANGTIME" />
+            <!-- Vessel failed to berth-->
+            <xs:enumeration value="VESFAILBER" />
+            <!-- After Ops_Authorities-->
+            <xs:enumeration value="DET000" />
+            <!-- Terminal_Awaiting Yard (cargo/terminal truck/straddle carrier/Congestion/Equipment down)-->
+            <xs:enumeration value="DET003" />
+            <!-- Vessel_Container/cargo Damaged (Discharging/Load)-->
+            <xs:enumeration value="DET005" />
+            <!-- Terminal_Crane boom up/dow-->
+            <xs:enumeration value="DET006" />
+            <!-- Terminal_Crane congestion (split Clash)-->
+            <xs:enumeration value="DET007" />
+            <!-- Terminal_Crane down (mechanical/spreader/another)-->
+            <xs:enumeration value="DET008" />
+            <!-- Terminal_Crane Shifting (between vessels or on same vessel)-->
+            <xs:enumeration value="DET009" />
+            <!-- Terminal_Gang Rolling to another vessel temporary/terminal request-->
+            <xs:enumeration value="DET010" />
+            <!-- Terminal_Hatch cover (Open/Closing)-->
+            <xs:enumeration value="DET011" />
+            <!-- Terminal_Hazardous (special handling or leak)-->
+            <xs:enumeration value="DET012" />
+            <!-- Terminal_OOG with Frame or Wires (Discharging/Load)-->
+            <xs:enumeration value="DET014" />
+            <!-- Terminal_Operating System failure (terminal)-->
+            <xs:enumeration value="DET015" />
+            <!-- Terminal_Reefer damaged unit (temperature or other) where terminal is responsible-->
+            <xs:enumeration value="DET016" />
+            <!-- Terminal_Reefers to unplug/plug where terminal is responsible-->
+            <xs:enumeration value="DET017" />
+            <!-- Terminal_Safety reasons/Inspections/meetings (on terminal)-->
+            <xs:enumeration value="DET018" />
+            <!-- MSC_Stevedore/Labor gangs late arrival (gangs late request)-->
+            <xs:enumeration value="DET019" />
+            <!-- Terminal_Stevedore/Labor injury-->
+            <xs:enumeration value="DET020" />
+            <!-- Terminal_Stevedores/Labor (shifts change or lunch time)-->
+            <xs:enumeration value="DET021" />
+            <!-- Terminal_Terminal black out (power outage) where terminal is responsible-->
+            <xs:enumeration value="DET022" />
+            <!-- Terminal_Vessel shifted/terminal request-->
+            <xs:enumeration value="DET023" />
+            <!-- Vessel_Ballasting-->
+            <xs:enumeration value="DET024" />
+            <!-- Vessel_Cell Guide Damaged-->
+            <xs:enumeration value="DET026" />
+            <!-- Vessel_Crane down (Vessel crane/mechanical)-->
+            <xs:enumeration value="DET027" />
+            <!-- Vessel_Crew injury-->
+            <xs:enumeration value="DET028" />
+            <!-- Vessel_Gangway/net/gear/cranes blocking operation-->
+            <xs:enumeration value="DET029" />
+            <!-- Vessel_Hatch covers/Lids Hydraulic (Open/Closing/Unlock)-->
+            <xs:enumeration value="DET030" />
+            <!-- Vessel_Hatch/Lids damage (Vessel)-->
+            <xs:enumeration value="DET031" />
+            <!-- Vessel_Lashing/Unlashing (container or equipment) by crew-->
+            <xs:enumeration value="DET032" />
+            <!-- Vessel_Provision/Stores-->
+            <xs:enumeration value="DET033" />
+            <!-- Vessel_Reefers - Crew to unplug/plug-->
+            <xs:enumeration value="DET034" />
+            <!-- Vessel_Safety reasons/Inspections (on vessel)-->
+            <xs:enumeration value="DET036" />
+            <!-- Vessel_Slack lines (awaiting tightening lines)-->
+            <xs:enumeration value="DET037" />
+            <!-- Vessel_Sludge removal-->
+            <xs:enumeration value="DET038" />
+            <!-- Vessel_Smoke / scrubber emissions (on vessel)-->
+            <xs:enumeration value="DET039" />
+            <!-- Vessel_Stability-Vessel (trim or list)-->
+            <xs:enumeration value="DET040" />
+            <!-- Vessel_Twist lock broken/shortage/Mixed type-->
+            <xs:enumeration value="DET041" />
+            <!-- MSC_Cargo (late receiving)-->
+            <xs:enumeration value="DET046" />
+            <!-- MSC_Change of Destination (containers) during Ops-->
+            <xs:enumeration value="DET047" />
+            <!-- MSC_Live Connections/Transhipment (GVA Request)-->
+            <xs:enumeration value="DET048" />
+            <!-- MSC_Stowage changes during operation (planning)-->
+            <xs:enumeration value="DET049" />
+            <!-- MSC_Stowage plan arrive late (planning)-->
+            <xs:enumeration value="DET050" />
+            <!-- After Ops_Local Public Holidays-->
+            <xs:enumeration value="DET052" />
+            <!-- During Ops_No gangs requested (Gva instruction/Avoid Extra Charges)-->
+            <xs:enumeration value="DET053" />
+            <!-- Before Ops_No gangs requested (Gva instruction/waiting cargo)-->
+            <xs:enumeration value="DET054" />
+            <!-- After Ops_Strike-->
+            <xs:enumeration value="DET056" />
+            <!-- After Ops_Vessel repairs and cleaning-->
+            <xs:enumeration value="DET057" />
+            <!-- After Ops_Vessel supplies including bunkers-->
+            <xs:enumeration value="DET058" />
+            <!-- After Ops_Weather-->
+            <xs:enumeration value="DET059" />
+            <!-- During Ops_Berth shifting-->
+            <xs:enumeration value="DET060" />
+            <!-- After Ops_Navigation Restrictions-->
+            <xs:enumeration value="DET061" />
+            <!-- During Ops_No gangs requested (Gva instruction/waiting for cargo)-->
+            <xs:enumeration value="DET062" />
+            <!-- After Ops_Waiting at berth (GVA instruction, ahead of schedule, to avoid extra charges)-->
+            <xs:enumeration value="DET064" />
+            <!-- Vessel_Accident/Incident/event occurred-->
+            <xs:enumeration value="DET065" />
+            <!-- Before Ops_Authorities-->
+            <xs:enumeration value="DET067" />
+            <!-- During Ops_Authorities-->
+            <xs:enumeration value="DET068" />
+            <!-- Terminal_Container/cargo Damaged (Discharging/Load)-->
+            <xs:enumeration value="DET069" />
+            <!-- Vessel_Hazardous (special handling or leak)-->
+            <xs:enumeration value="DET070" />
+            <!-- Before Ops_Local Public Holidays-->
+            <xs:enumeration value="DET071" />
+            <!-- During Ops_Local Public Holidays-->
+            <xs:enumeration value="DET072" />
+            <!-- During Ops_Navigation Restrictions-->
+            <xs:enumeration value="DET073" />
+            <!-- Terminal_Stevedore/Labor gangs late arrival (gangs late request)-->
+            <xs:enumeration value="DET083" />
+            <!-- Before Ops_Strike-->
+            <xs:enumeration value="DET084" />
+            <!-- During Ops_Strike-->
+            <xs:enumeration value="DET085" />
+            <!-- Before Ops_Vessel repairs and cleaning-->
+            <xs:enumeration value="DET086" />
+            <!-- During Ops_Vessel repairs and cleaning-->
+            <xs:enumeration value="DET087" />
+            <!-- Before Ops_Vessel supplies including bunkers-->
+            <xs:enumeration value="DET088" />
+            <!-- During Ops_Vessel supplies including bunkers-->
+            <xs:enumeration value="DET089" />
+            <!-- Before Ops_Weather-->
+            <xs:enumeration value="DET090" />
+            <!-- During Ops_Weather-->
+            <xs:enumeration value="DET091" />
+            <!-- During Ops_Vessel off hired-->
+            <xs:enumeration value="DET092" />
+            <!-- Before Ops_Vessel off hired-->
+            <xs:enumeration value="DET093" />
+            <!-- After Ops_Vessel off hired-->
+            <xs:enumeration value="DET094" />
+            <!-- Terminal_No gangs deployed (Terminal Option)-->
+            <xs:enumeration value="DET095" />
+            <!-- After Ops_Avoiding pilot overtime-->
+            <xs:enumeration value="DET097" />
+            <!-- After Ops_Avoiding tug overtime-->
+            <xs:enumeration value="DET098" />
+            <!-- After Ops_Passing vessels-->
+            <xs:enumeration value="DET099" />
+            <!-- After Ops_Waiting for booked departure time / canal passage-->
+            <xs:enumeration value="DET100" />
+            <!-- Before Ops_Compulsory breaks-->
+            <xs:enumeration value="DET102" />
+            <!-- Before Ops_Passing vessels-->
+            <xs:enumeration value="DET103" />
+            <!-- During Ops_Compulsory breaks-->
+            <xs:enumeration value="DET104" />
+            <!-- During Ops_Passing vessels -->
+            <xs:enumeration value="DET105" />
+            <!-- MSC_Delay arising from non containerised cargo-->
+            <xs:enumeration value="DET106" />
+            <!-- Vessel_Vessel request-->
+            <xs:enumeration value="DET107" />
+            <!-- Terminal_Lashing/Unlashing (Containers/Man aloft/Gear box)-->
+            <xs:enumeration value="DET108" />
+            <!-- Vessel_Break Bulk Cargo (Discharging/Load)-->
+            <xs:enumeration value="DET109" />
+            <!-- MSC_Wrong stowage by planner-->
+            <xs:enumeration value="DET110" />
+            <!-- Terminal_Wrong stowage by terminal-->
+            <xs:enumeration value="DET111" />
+            <!-- Before Ops_Navigation Restrictions-->
+            <xs:enumeration value="DET112" />
+			<!-- After Ops_Power supply (not terminals fault)-->
+            <xs:enumeration value="DET113" />
+			<!-- Before Ops_Power supply (not terminals fault)-->
+            <xs:enumeration value="DET114" />
+			<!-- During Ops_Power supply (not terminals fault)-->
+            <xs:enumeration value="DET115" />
+			<!-- Before Ops_No gang requested (Gva instruction/Avoid extra charge)-->
+            <xs:enumeration value="DET116" />
+			<!-- Terminal_Weather - not all cranes-->
+            <xs:enumeration value="DET117" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="detacctcode">
+        <xs:restriction base="xs:string">
+            <!-- ANL-->
+            <xs:enumeration value="ANL" />
+            <!-- APL-->
+            <xs:enumeration value="APL" />
+            <!-- CMA-->
+            <xs:enumeration value="CMA" />
+            <!-- COS-->
+            <xs:enumeration value="COS" />
+            <!-- CSC-->
+            <xs:enumeration value="CSC" />
+            <!-- CSV-->
+            <xs:enumeration value="CSV" />
+            <!-- Disputed - see remark 1-->
+            <xs:enumeration value="DISREM1" />
+            <!-- Disputed - see remark 10-->
+            <xs:enumeration value="DISREM10" />
+            <!-- Disputed - see remark 2-->
+            <xs:enumeration value="DISREM2" />
+            <!-- Disputed - see remark 3-->
+            <xs:enumeration value="DISREM3" />
+            <!-- Disputed - see remark 4-->
+            <xs:enumeration value="DISREM4" />
+            <!-- Disputed - see remark 5-->
+            <xs:enumeration value="DISREM5" />
+            <!-- Disputed - see remark 6-->
+            <xs:enumeration value="DISREM6" />
+            <!-- Disputed - see remark 7-->
+            <xs:enumeration value="DISREM7" />
+            <!-- Disputed - see remark 8-->
+            <xs:enumeration value="DISREM8" />
+            <!-- Disputed - see remark 9-->
+            <xs:enumeration value="DISREM9" />
+            <!-- EML-->
+            <xs:enumeration value="EML" />
+            <!-- HLC-->
+            <xs:enumeration value="HLC" />
+            <!-- HMC-->
+            <xs:enumeration value="HMC" />
+            <!-- HSG-->
+            <xs:enumeration value="HSG" />
+            <!-- KKK-->
+            <xs:enumeration value="KKK" />
+            <!-- LIB-->
+            <xs:enumeration value="LIB" />
+            <!-- MOL-->
+            <xs:enumeration value="MOL" />
+            <!-- MSC-->
+            <xs:enumeration value="MSC" />
+            <!-- MSK-->
+            <xs:enumeration value="MSK" />
+            <!-- NOR-->
+            <xs:enumeration value="NOR" />
+            <!-- SAF-->
+            <xs:enumeration value="SAF" />
+            <!-- Stevedore-->
+            <xs:enumeration value="STEV" />
+            <!-- Terminal Op-->
+            <xs:enumeration value="TEROP" />
+            <!-- USL-->
+            <xs:enumeration value="USL" />
+            <!-- Vessel-->
+            <xs:enumeration value="VSL" />
+            <!-- WHL-->
+            <xs:enumeration value="WHL" />
+            <!-- YML-->
+            <xs:enumeration value="YML" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="operatorcode">
+        <xs:restriction base="xs:string">
+            <!-- MEDITERRANEAN SHIPPING COMPANY-->
+            <xs:enumeration value="MSC" />
+            <!-- AUSTRALIAN NATIONAL LINE-->
+            <xs:enumeration value="ANL" />
+            <!-- American President Line-->
+            <xs:enumeration value="APL" />
+            <!-- CERES-->
+            <xs:enumeration value="CERES" />
+            <!-- CMACGM-->
+            <xs:enumeration value="CMA" />
+            <!-- CNI-->
+            <xs:enumeration value="CNI" />
+            <!-- COSCO-->
+            <xs:enumeration value="COS" />
+            <!-- CSC-->
+            <xs:enumeration value="CSC" />
+            <!-- CSAV-->
+            <xs:enumeration value="CSAV" />
+            <!-- EML-->
+            <xs:enumeration value="EML" />
+            <!-- HAPAG LLOYD - HLC-->
+            <xs:enumeration value="HLC" />
+            <!-- HOLLAD MAAS-->
+            <xs:enumeration value="HMC" />
+            <!-- HOT-->
+            <xs:enumeration value="HOT" />
+            <!-- HAMBURG SUD-->
+            <xs:enumeration value="HSD" />
+            <!-- K LINE-->
+            <xs:enumeration value="KKK" />
+            <!-- LIBRA-->
+            <xs:enumeration value="LIBRA" />
+            <!-- MASS-->
+            <xs:enumeration value="MASS" />
+            <!-- MOL-->
+            <xs:enumeration value="MOL" />
+            <!-- MAERSK SEALAND-->
+            <xs:enumeration value="MSK" />
+            <!-- NORASIA-->
+            <xs:enumeration value="NOR" />
+            <!-- NOT-->
+            <xs:enumeration value="NOT" />
+            <!-- PA-->
+            <xs:enumeration value="PA" />
+            <!-- PET-->
+            <xs:enumeration value="PET" />
+            <!-- PNCT-->
+            <xs:enumeration value="PNCT" />
+            <!-- SAFMARINE-->
+            <xs:enumeration value="SAF" />
+            <!-- SOC-->
+            <xs:enumeration value="SOC" />
+            <!-- SSA-->
+            <xs:enumeration value="SSA" />
+            <!-- USL-->
+            <xs:enumeration value="USL" />
+            <!-- WAN HAI-->
+            <xs:enumeration value="WAN" />
+            <!-- Yang Ming Line-->
+            <xs:enumeration value="YML" />
+            <!-- WEC  LINES-->
+            <xs:enumeration value="WEC" />
+            <!-- EMES/ARKAS-->
+            <xs:enumeration value="EMES" />
+            <!-- ZIM-->
+            <xs:enumeration value="ZIM" />
+            <!-- KENYA NATIONAL SHIPPING LINE-->
+            <xs:enumeration value="KNS" />
+            <!-- HYUNDAI-->
+            <xs:enumeration value="HMM" />
+            <!-- KLI-->
+            <xs:enumeration value="KLI" />
+            <!-- NYK-->
+            <xs:enumeration value="NYK" />
+            <!-- DELMAS-->
+            <xs:enumeration value="DEL" />
+            <!-- DELMAS-->
+            <xs:enumeration value="MDV" />
+            <!-- MCC-->
+            <xs:enumeration value="MCC" />
+            <!-- EMC-->
+            <xs:enumeration value="EMC" />
+            <!-- OOCL-->
+            <xs:enumeration value="OCL" />
+            <!-- AUSTRALIA-NEW ZEALAND DIRECT-->
+            <xs:enumeration value="ANZ" />
+            <!-- OCI-->
+            <xs:enumeration value="OCI" />
+            <!-- ILA-->
+            <xs:enumeration value="ILA" />
+            <!-- SCI-->
+            <xs:enumeration value="SCI" />
+            <!-- PORT LINE-->
+            <xs:enumeration value="POT" />
+            <!-- HAMBURG SUD-->
+            <xs:enumeration value="ALB" />
+            <!-- ALIANCA-->
+            <xs:enumeration value="ALI" />
+            <!-- AFRO LINER SERVICES-->
+            <xs:enumeration value="ALS" />
+            <!-- CARGO CONTAINER LINE Ltd-->
+            <xs:enumeration value="CCL" />
+            <!-- CMACGM-->
+            <xs:enumeration value="CGM" />
+            <!-- COMPAGNIE MARITIME BELGE-->
+            <xs:enumeration value="CMB" />
+            <!-- CoMaNav-->
+            <xs:enumeration value="CMN" />
+            <!-- LIBRA-->
+            <xs:enumeration value="CPL" />
+            <!-- C.P. SHIPS-->
+            <xs:enumeration value="CPS" />
+            <!-- CSAV-USA-->
+            <xs:enumeration value="CSA" />
+            <!-- CHINA SHIPPING LINE-->
+            <xs:enumeration value="CSL" />
+            <!-- CSAV-USA-->
+            <xs:enumeration value="CST" />
+            <!-- CSAV-USA-->
+            <xs:enumeration value="CSV" />
+            <!-- CONTSHIP-->
+            <xs:enumeration value="CTS" />
+            <!-- DEUTSCHE AFRICA LINE-->
+            <xs:enumeration value="DAL" />
+            <!-- STINNES-->
+            <xs:enumeration value="DIA" />
+            <!-- STINNES-->
+            <xs:enumeration value="DSR" />
+            <!-- ELLERMAN-->
+            <xs:enumeration value="EEE" />
+            <!-- EVERGREEN - EMU-->
+            <xs:enumeration value="EMS" />
+            <!-- EVERGREEN - EMU-->
+            <xs:enumeration value="EMU" />
+            <!-- EVERGREEN - EMU-->
+            <xs:enumeration value="EVE" />
+            <!-- EVERGREEN - EMU-->
+            <xs:enumeration value="EVG" />
+            <!-- EVERGREEN - EMU-->
+            <xs:enumeration value="EVR" />
+            <!-- HAPAG LLOYD - HLC-->
+            <xs:enumeration value="HAP" />
+            <!-- HARRISON LINE-->
+            <xs:enumeration value="HAR" />
+            <!-- HANJIN-->
+            <xs:enumeration value="HJS" />
+            <!--  HATSU MARINE Ltd-->
+            <xs:enumeration value="HML" />
+            <!-- HOLLAD MAAS-->
+            <xs:enumeration value="HMS" />
+            <!-- HAMBURG SUD-->
+            <xs:enumeration value="HPG" />
+            <!-- HAMBURG SUD-->
+            <xs:enumeration value="HSA" />
+            <!-- HAMBURG SUD-->
+            <xs:enumeration value="HSG" />
+            <!-- HYUNDAI-->
+            <xs:enumeration value="HYD" />
+            <!-- DEUTSCHE AFRICA LINE-->
+            <xs:enumeration value="IOI" />
+            <!-- ISCONT-->
+            <xs:enumeration value="ISC" />
+            <!-- ITALIA MARITTIMA S.P.A.-->
+            <xs:enumeration value="ITS" />
+            <!-- KENYA NATIONAL SHIPPING LINE-->
+            <xs:enumeration value="KNL" />
+            <!-- LIBRA-->
+            <xs:enumeration value="LBR" />
+            <!-- LIBRA-->
+            <xs:enumeration value="LBU" />
+            <!-- LIBRA-->
+            <xs:enumeration value="LIB" />
+            <!-- LLOYD TRIESTINO-->
+            <xs:enumeration value="LLT" />
+            <!-- LLOYD TRIESTINO-->
+            <xs:enumeration value="LTR" />
+            <!-- LYKES LINES-->
+            <xs:enumeration value="LYK" />
+            <!-- MAERSK SEALAND-->
+            <xs:enumeration value="MAE" />
+            <!-- MARUBA-->
+            <xs:enumeration value="MAR" />
+            <!-- NORASIA-->
+            <xs:enumeration value="NCL" />
+            <!-- NORASIA-->
+            <xs:enumeration value="NGL" />
+            <!-- HAPAG LLOYD - HLC-->
+            <xs:enumeration value="NLC" />
+            <!-- NORASIA-->
+            <xs:enumeration value="NOA" />
+            <!-- NORASIA-->
+            <xs:enumeration value="NOM" />
+            <!-- NORASIA-->
+            <xs:enumeration value="NSL" />
+            <!-- OOCL-->
+            <xs:enumeration value="OOL" />
+            <!-- P&O NEDLLOYD-->
+            <xs:enumeration value="PNO" />
+            <!-- PORT LINE-->
+            <xs:enumeration value="POR" />
+            <!-- QUADRANT CONTAINER LINE-->
+            <xs:enumeration value="QCL" />
+            <!-- SEAGO LINE-->
+            <xs:enumeration value="SEJ" />
+            <!-- SENATOR LINES-->
+            <xs:enumeration value="SEN" />
+            <!-- SEAGO LINE-->
+            <xs:enumeration value="SGL" />
+            <!-- SHI-->
+            <xs:enumeration value="SHI" />
+            <!-- STINNES-->
+            <xs:enumeration value="STI" />
+            <!-- HAMBURG SUD-->
+            <xs:enumeration value="SUD" />
+            <!-- HOLLAD MAAS-->
+            <xs:enumeration value="UNK" />
+            <!-- Vogt & Maguire Liner LTD-->
+            <xs:enumeration value="VM" />
+            <!-- WEC Transshipment-->
+            <xs:enumeration value="WTR" />
+            <!-- YEMEN GULF LINE-->
+            <xs:enumeration value="YGL" />
+            <!-- STINNES-->
+            <xs:enumeration value="ANX" />
+            <!-- HAPAG LLOYD - HLC-->
+            <xs:enumeration value="HPL" />
+            <!-- Pacifica shipping Limited-->
+            <xs:enumeration value="PAC" />
+            <!-- OOCL-->
+            <xs:enumeration value="MAL" />
+            <!-- STINNES-->
+            <xs:enumeration value="HSS" />
+            <!-- STINNES-->
+            <xs:enumeration value="HST" />
+            <!-- WEC  LINES-->
+            <xs:enumeration value="EIM" />
+            <!-- VESSEL S.A.-->
+            <xs:enumeration value="VSL" />
+            <!-- NIVER LINES SHIPPING Co. S.A.-->
+            <xs:enumeration value="NIV" />
+            <!-- LOGIN-->
+            <xs:enumeration value="LOG" />
+            <!-- CCN-->
+            <xs:enumeration value="CCN" />
+            <!-- HSK-->
+            <xs:enumeration value="HSK" />
+            <!-- MAERSK SEALAND-->
+            <xs:enumeration value="SCL" />
+            <!-- Swires -->
+            <xs:enumeration value="SSL" />
+            <!-- TRS-->
+            <xs:enumeration value="TRS" />
+            <!-- PRT-->
+            <xs:enumeration value="PRT" />
+            <!-- ALA-->
+            <xs:enumeration value="ALA" />
+            <!-- Atlantic Container Lines-->
+            <xs:enumeration value="ACL" />
+            <!-- UAS-->
+            <xs:enumeration value="UAS" />
+            <!-- UNITED ARAB SHIPPING COMPANY*-->
+            <xs:enumeration value="UAO" />
+            <!-- SEA-->
+            <xs:enumeration value="SEA" />
+            <!-- Linea Messina-->
+            <xs:enumeration value="MES" />
+            <!-- HYUNDAI-->
+            <xs:enumeration value="HYU" />
+            <!-- OCEAN NETWORK EXPRESS-->
+            <xs:enumeration value="ONE" />
+            <!-- NOBLEZA-->
+            <xs:enumeration value="NOBL" />
+            <!-- NAVIERA PINILLOS S.A-->
+            <xs:enumeration value="NPWU" />
+            <!-- MLL-->
+            <xs:enumeration value="MLL" />
+            <!-- SM LINE-->
+            <xs:enumeration value="SML" />
+            <!-- MESSINA SHIPPING CO. LTD-->
+            <xs:enumeration value="MSSG" />
+            <!-- RCL FEEDER PTE.LTD-->
+            <xs:enumeration value="REG" />
+            <!-- REGIONAL CONTAINER LINES-->
+            <xs:enumeration value="RCL" />
+            <!-- ORIENT EXPRESS LINES (S) PTE LTD-->
+            <xs:enumeration value="OE2" />
+            <!-- ORIENT EXPRESS LINES-->
+            <xs:enumeration value="OE1" />
+            <!-- Ellerman Container Liners-->
+            <xs:enumeration value="ECL" />
+			<!-- EVERGREEN-->
+            <xs:enumeration value="EIS" />
+            <!-- PAKISTAN NATIONAL SHIPPING COR -->
+            <xs:enumeration value="PNS" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="husbandrycode">
+        <xs:restriction base="xs:string">
+            <!-- AMS Filing fees type=B-->
+            <xs:enumeration value="AMSFILFEE" />
+            <!-- APHIS FEES PAYMENT NUMBER (15 max) type=N-->
+            <xs:enumeration value="APHISFPN1" />
+            <!-- Berth cleaning type=B-->
+            <xs:enumeration value="BERCLE" />
+            <!-- Bonus to master/crew type=B-->
+            <xs:enumeration value="BONMAST" />
+            <!-- Cargo survey type=B-->
+            <xs:enumeration value="CARGOSURV" />
+            <!-- Cash to master delivery type=B-->
+            <xs:enumeration value="CASHMAST" />
+            <!-- Cell phone usage type=B-->
+            <xs:enumeration value="CELLUSAG" />
+            <!-- Channel dues type=B-->
+            <xs:enumeration value="CHADUE" />
+            <!-- Charts type=B-->
+            <xs:enumeration value="CHART" />
+            <!-- Consular fees/visa fees type=B-->
+            <xs:enumeration value="CONSVISAFE" />
+            <!-- Courier delivery type=B-->
+            <xs:enumeration value="COUDELIVER" />
+            <!-- Courier package delivery fees type=B-->
+            <xs:enumeration value="COURDELFEE" />
+            <!-- Crew air fare type=B-->
+            <xs:enumeration value="CREWAIRFAR" />
+            <!-- Crew changes type=B-->
+            <xs:enumeration value="CREWCHANG" />
+            <!-- Crew lodging type=B-->
+            <xs:enumeration value="CREWLODG" />
+            <!-- Crew ships's mail type=B-->
+            <xs:enumeration value="CREWSHPMAI" />
+            <!-- Crew transportation type=B-->
+            <xs:enumeration value="CREWTRANSP" />
+            <!-- Custom APHIS fees type=B-->
+            <xs:enumeration value="CUSAPHFEE" />
+            <!-- Custom fee (cargo) type=B-->
+            <xs:enumeration value="CUSTFEE" />
+            <!-- Custom tonnage tax type=B-->
+            <xs:enumeration value="CUSTON" />
+            <!-- Custom user fees type=B-->
+            <xs:enumeration value="CUSUSEFEE" />
+            <!-- Date of first payment type=D-->
+            <xs:enumeration value="DATEFIRP1" />
+            <!-- Date of first payment type=D-->
+            <xs:enumeration value="DATEFIRP2" />
+            <!-- Dunnage removal type=B-->
+            <xs:enumeration value="DUNNREM" />
+            <!-- ENOA/D fees type=B-->
+            <xs:enumeration value="ENOADFEE" />
+            <!-- Fresh water type=B-->
+            <xs:enumeration value="FREWAT" />
+            <!-- Fumigation charges type=B-->
+            <xs:enumeration value="FUMCHARGE" />
+            <!-- Government service / OT type=B-->
+            <xs:enumeration value="GOVSER" />
+            <!-- Guard service/security watchman type=B-->
+            <xs:enumeration value="GUASER" />
+            <!-- On/Off hire survey type=B-->
+            <xs:enumeration value="HIRESURV" />
+            <!-- Hold inspections type=B-->
+            <xs:enumeration value="HOLDSINSP" />
+            <!-- Laundry type=B-->
+            <xs:enumeration value="LAUNDRY" />
+            <!-- Launch service type=B-->
+            <xs:enumeration value="LAUSER" />
+            <!-- Light dues type=B-->
+            <xs:enumeration value="LIGDUE" />
+            <!-- Medical equipment and supplies type=B-->
+            <xs:enumeration value="MEDICEQUSU" />
+            <!-- Medical expenses type=B-->
+            <xs:enumeration value="MEDICEXP" />
+            <!-- Other vessel crew expenses type=B-->
+            <xs:enumeration value="OTHERVESEX" />
+            <!-- Repairs type=B-->
+            <xs:enumeration value="RAPAIR" />
+            <!-- Sanitary inspection type=B-->
+            <xs:enumeration value="SANITINSP" />
+            <!-- Ships spares type=B-->
+            <xs:enumeration value="SHIPSPARE" />
+            <!-- Slop garbage removal type=B-->
+            <xs:enumeration value="SLOPGARBRE" />
+            <!-- Supplies and provisions type=B-->
+            <xs:enumeration value="SUPPROV" />
+            <!-- TONNAGE TAX PAYMENT NUMBER @ $.06 (5 max) type=N-->
+            <xs:enumeration value="TONTAXPN1" />
+            <!-- TONNAGE TAX PAYMENT NUMBER @ $.02 (5 max) type=N-->
+            <xs:enumeration value="TONTAXPN2" />
+            <!-- USER FEES PAYMENT NUMBER @ $437 (13 max) type=N-->
+            <xs:enumeration value="USRFPAYN1" />
+            <!-- 2nd USER FEES PAYMENT NUMBER @ $274 (1 only) type=N-->
+            <xs:enumeration value="USRFPAYN2" />
+            <!-- Vessel survey type=B-->
+            <xs:enumeration value="VESSURV" />
+            <!-- Doctor services type=T-->
+            <xs:enumeration value="DOCSRS" />
+            <!-- Other Service Supplied type=ST-->
+            <xs:enumeration value="OTRSRSUPLD" />
+            <!-- Seal Box type=T-->
+            <xs:enumeration value="SELBOX" />
+            <!-- Ship Stores type=T-->
+            <xs:enumeration value="SHPSTRS" />
+            <!-- GANGWAY type=B-->
+            <xs:enumeration value="GANGWAY" />
+            <!-- Taxi type=T-->
+            <xs:enumeration value="TAXI" />
+            <!-- Cash to master type=T-->
+            <xs:enumeration value="CSH2MA" />
+            <!-- Dentist services type=T-->
+            <xs:enumeration value="DENSRS" />
+            <!-- Flights type=T-->
+            <xs:enumeration value="FLGHT" />
+            <!-- Freshwater type=T-->
+            <xs:enumeration value="FRSWTR" />
+            <!-- Garbage type=T-->
+            <xs:enumeration value="GARBGE" />
+            <!-- Slops/sludge type=T-->
+            <xs:enumeration value="SLPSLUGE" />
+            <!-- Vessel spare parts type=T-->
+            <xs:enumeration value="VSLSREPTS" />
+            <!-- MSC Operated by type=T-->
+            <xs:enumeration value="MSCOPTEDBY" />
+            <!-- Garbage Type type=N-->
+            <xs:enumeration value="GARBGETYPE" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="shiftreasoncode">
+        <xs:restriction base="xs:string">
+            <!-- To create additional space for loading heavy containers -->
+            <xs:enumeration value="To create additional space for loading heavy containers" />
+            <!-- Due to change of port rotation or port omission -->
+            <xs:enumeration value="Due to change of port rotation or port omission" />
+            <!-- Due to a change of destination request ( COD ) -->
+            <xs:enumeration value="Due to a change of destination request ( COD )" />
+            <!-- Due to sailing deadlines / port strikes imposed or cut and runs at the last minute -->
+            <xs:enumeration value="Due to sailing deadlines / port strikes imposed or cut and runs at the last minute" />
+            <!-- Due to mis-routing declaration of cargo  -->
+            <xs:enumeration value="Due to mis-routing declaration of cargo " />
+            <!-- Due to lashing forces being exceeded -->
+            <xs:enumeration value="Due to lashing forces being exceeded" />
+            <!-- Special cargo overstowing import cargo to be discharged (B.Bulk / OOG / Sensitive Commodities) -->
+            <xs:enumeration value="Special cargo overstowing import cargo to be discharged (B.Bulk / OOG / Sensitive Commodities)" />
+            <!-- To reduce the deck tier unit height to avoid extra transit surcharges crossing the Canals -->
+            <xs:enumeration value="To reduce the deck tier unit height to avoid extra transit surcharges crossing the Canals" />
+            <!-- Due to reefer segregation onboard ( IMO - Reefer conflicts ) -->
+            <xs:enumeration value="Due to reefer segregation onboard ( IMO - Reefer conflicts )" />
+            <!-- Reefer units loaded in temporary overstow positions to allow connection to reefer sockets -->
+            <xs:enumeration value="Reefer units loaded in temporary overstow positions to allow connection to reefer sockets" />
+            <!-- Empty unit repositioning -->
+            <xs:enumeration value="Empty unit repositioning" />
+            <!-- IMO constraint - Due to IMO segregation rules or restrictions onboard -->
+            <xs:enumeration value="IMO constraint - Due to IMO segregation rules or restrictions onboard" />
+            <!-- Due to a terminal Port crane restriction in the next ports -->
+            <xs:enumeration value="Due to a terminal Port crane restriction in the next ports" />
+            <!-- Restows performed to assist in maximising vessel capacity -->
+            <xs:enumeration value="Restows performed to assist in maximising vessel capacity" />
+            <!-- Restow carried out for ships spares / power pack -->
+            <xs:enumeration value="Restow carried out for ships spares / power pack" />
+            <!-- Reefer malfunction while on board -->
+            <xs:enumeration value="Reefer malfunction while on board" />
+            <!-- Due to local port restrictions or customs inspections to avoid fines at POD -->
+            <xs:enumeration value="Due to local port restrictions or customs inspections to avoid fines at POD" />
+            <!-- Re-stow for Operational reason. Shared cost as per 2M contract (% of throughput) -->
+            <xs:enumeration value="Re-stow for Operational reason. Shared cost as per 2M contract (% of throughput)" />
+            <!-- Due to the vessel or vessels equipment being damaged or failing -->
+            <xs:enumeration value="Due to the vessel or vessels equipment being damaged or failing" />
+            <!-- Due to late arriving cargo being stowed wherever possible to avoid delays in operations -->
+            <xs:enumeration value="Due to late arriving cargo being stowed wherever possible to avoid delays in operations" />
+            <!-- Terminal convenience -->
+            <xs:enumeration value="Terminal convenience" />
+            <!-- To keep the vessels stability /stress / visibility parameters within safety limits -->
+            <xs:enumeration value="To keep the vessels stability /stress / visibility parameters within safety limits" />
+            <!-- Due to a terminal wrong or bad stowage onboard -->
+            <xs:enumeration value="Due to a terminal wrong or bad stowage onboard" />
+            <!-- Due to change of service and ROB being kept onboard for FPOD ( t/s cost saving ) -->
+            <xs:enumeration value="Due to change of service and ROB being kept onboard for FPOD ( t/s cost saving )" />
+            <!-- Port restrictions due to Reefer handling capacity ashore -->
+            <xs:enumeration value="Port restrictions due to Reefer handling capacity ashore" />
+            <!-- FNTE Planning Oversight -->
+            <xs:enumeration value="FNTE Planning Oversight" />
+            <!-- Due to a terminal shore Crane break down -->
+            <xs:enumeration value="Due to a terminal shore Crane break down" />
+            <!-- Due to cargo or container movement / damage onboard -->
+            <xs:enumeration value="Due to cargo or container movement / damage onboard" />
+            <!-- Reefer restows performed to maximise vessel reefer capacity -->
+            <xs:enumeration value="Reefer restows performed to maximise vessel reefer capacity" />
+            <!-- Due to late arriving cargo being stowed whenever posible to avoid delays in operations -->
+            <xs:enumeration value="Due to late arriving cargo being stowed whenever posible to avoid delays in operations" />
+            <!-- Marine Operations Restows Request -->
+            <xs:enumeration value="Marine Operations Restows Request" />
+            <!-- Vessel diverted out of Suez to avoid Red Sea Risk Area -->
+            <xs:enumeration value="Vessel diverted out of Suez to avoid Red Sea Risk Area" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="yardshiftreasoncode">
+        <xs:restriction base="xs:string">
+            <!-- Aes Not Filed-->
+            <xs:enumeration value="AESNOTFIL" />
+            <!-- Change Of Pod-->
+            <xs:enumeration value="CHPOD" />
+            <!-- Change Of Vsl Rotation-->
+            <xs:enumeration value="CHVSLROT" />
+            <!-- Cont Types Mixed In Stack-->
+            <xs:enumeration value="CONTTYMIX" />
+            <!-- Container Damage-->
+            <xs:enumeration value="CTRDMG" />
+            <!-- Customs Hold-->
+            <xs:enumeration value="CUSTHOLD" />
+            <!-- Line Hold-->
+            <xs:enumeration value="LINEHOLD" />
+            <!-- Multiple Vessels Receiving-->
+            <xs:enumeration value="MULVSLREC" />
+            <!-- Pod'S Mixed In Stack-->
+            <xs:enumeration value="PODMIX" />
+            <!-- Weights Mixed In Stack-->
+            <xs:enumeration value="WEIMIX" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="shiftaccountcode">
+        <xs:restriction base="xs:string">
+            <!-- ACLU-->
+            <xs:enumeration value="ACLU" />
+            <!-- ALI1-->
+            <xs:enumeration value="ALI1" />
+            <!-- ANNU-->
+            <xs:enumeration value="ANNU" />
+            <!-- APLU-->
+            <xs:enumeration value="APLU" />
+            <!-- CCLU-->
+            <xs:enumeration value="CCLU" />
+            <!-- CCNI-->
+            <xs:enumeration value="CCNI" />
+            <!-- CGMU-->
+            <xs:enumeration value="CGMU" />
+            <!-- COSU-->
+            <xs:enumeration value="COSU" />
+            <!-- CSAV-->
+            <xs:enumeration value="CSAV" />
+            <!-- DAL-->
+            <xs:enumeration value="DAL" />
+            <!-- EISU-->
+            <xs:enumeration value="EISU" />
+            <!-- HDMU-->
+            <xs:enumeration value="HDMU" />
+            <!-- HJCU-->
+            <xs:enumeration value="HJCU" />
+            <!-- HLCU-->
+            <xs:enumeration value="HLCU" />
+            <!-- HMCL-->
+            <xs:enumeration value="HMCL" />
+            <!-- ISCO-->
+            <xs:enumeration value="ISCO" />
+            <!-- KKLU-->
+            <xs:enumeration value="KKLU" />
+            <!-- KNSL-->
+            <xs:enumeration value="KNSL" />
+            <!-- LOGN-->
+            <xs:enumeration value="LOGN" />
+            <!-- MAEU-->
+            <xs:enumeration value="MAEU" />
+            <!-- MCPU-->
+            <xs:enumeration value="MCPU" />
+            <!-- MDVA-->
+            <xs:enumeration value="MDVA" />
+            <!-- MOLU-->
+            <xs:enumeration value="MOLU" />
+            <!-- MSCU-->
+            <xs:enumeration value="MSCU" />
+            <!-- NIV1-->
+            <xs:enumeration value="NIV1" />
+            <!-- NSLU-->
+            <xs:enumeration value="NSLU" />
+            <!-- NYKU-->
+            <xs:enumeration value="NYKU" />
+            <!-- OOCL-->
+            <xs:enumeration value="OOCL" />
+            <!-- OOLU-->
+            <xs:enumeration value="OOLU" />
+            <!-- PACU-->
+            <xs:enumeration value="PACU" />
+            <!-- PCIU-->
+            <xs:enumeration value="PCIU" />
+            <!-- PTL1-->
+            <xs:enumeration value="PTL1" />
+            <!-- SAFM-->
+            <xs:enumeration value="SAFM" />
+            <!-- SEJJ-->
+            <xs:enumeration value="SEJJ" />
+            <!-- SIIU-->
+            <xs:enumeration value="SIIU" />
+            <!-- STIN-->
+            <xs:enumeration value="STIN" />
+            <!-- SUDU-->
+            <xs:enumeration value="SUDU" />
+            <!-- SWIR-->
+            <xs:enumeration value="SWIR" />
+            <!-- UASC-->
+            <xs:enumeration value="UASC" />
+            <!-- VES1-->
+            <xs:enumeration value="VES1" />
+            <!-- WECC-->
+            <xs:enumeration value="WECC" />
+            <!-- ZIMU-->
+            <xs:enumeration value="ZIMU" />
+            <!-- ECLU-->
+            <xs:enumeration value="ECLU" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="custominspectcode">
+        <xs:restriction base="xs:string">
+            <!-- Cargo Inspection type=B-->
+            <xs:enumeration value="CARGO_INSP" />
+            <!-- Empty type=I-->
+            <xs:enumeration value="EMPTY" />
+            <!-- Export type=I-->
+            <xs:enumeration value="EXPORT" />
+            <!-- Import type=I-->
+            <xs:enumeration value="IMPORT" />
+            <!-- Inspection type=B-->
+            <xs:enumeration value="INSPECT" />
+            <!-- Remaining on Board type=I-->
+            <xs:enumeration value="ROB" />
+            <!-- Restows/Shifts Incurred type=I-->
+            <xs:enumeration value="RSINCURRED" />
+            <!-- Vessel Inspection type=B-->
+            <xs:enumeration value="VES_INSP" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="safetytype">
+        <xs:restriction base="xs:string">
+            <!-- Cargo damage type=B-->
+            <xs:enumeration value="CARGODAM" />
+            <!-- CBP VL inspection type=B-->
+            <xs:enumeration value="CBPVL" />
+            <!-- COTP order issued type=B-->
+            <xs:enumeration value="COTP" />
+            <!-- Crew list check type=B-->
+            <xs:enumeration value="CREWLIST" />
+            <!-- ENOA received type=B-->
+            <xs:enumeration value="ENOA" />
+            <!-- Garbage violation type=B-->
+            <xs:enumeration value="GARBVIO" />
+            <!-- Hazardous incident type=B-->
+            <xs:enumeration value="HAZINC" />
+            <!-- Incident report issued type=B-->
+            <xs:enumeration value="INCREPORT" />
+            <!-- Navigation equipment check type=B-->
+            <xs:enumeration value="NAVEQUIP" />
+            <!-- NVMC checked type=B-->
+            <xs:enumeration value="NVMC" />
+            <!-- Personnel accident type=B-->
+            <xs:enumeration value="PERSACC" />
+            <!-- Pollution incident type=B-->
+            <xs:enumeration value="POLLINCID" />
+            <!-- USCBP Cargo Inspection type=B-->
+            <xs:enumeration value="USCBPCARGO" />
+            <!-- USCG VI inspection type=B-->
+            <xs:enumeration value="USCGVI" />
+            <!-- Vessel damages type=B-->
+            <xs:enumeration value="VESSELDAM" />
+            <!-- VI Detained Class type=B-->
+            <xs:enumeration value="VIDETCLASS" />
+            <!-- VI Detained USCG type=B-->
+            <xs:enumeration value="VIDETUSCG" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="equipcode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Bus (people mover)" />
+            <xs:enumeration value="Chassis" />
+            <xs:enumeration value="Empty Handlers" />
+            <xs:enumeration value="Field pickups" />
+            <xs:enumeration value="Fork Lift" />
+            <xs:enumeration value="Gantry for rail yard" />
+            <xs:enumeration value="Mafies" />
+            <xs:enumeration value="Mobile crane" />
+            <xs:enumeration value="Rail Mounted Gantry" />
+            <xs:enumeration value="Reach stackers" />
+            <xs:enumeration value="Rubber Tire Gantry" />
+            <xs:enumeration value="Straddle Carriers" />
+            <xs:enumeration value="Top Handlers" />
+            <xs:enumeration value="Trailers" />
+            <xs:enumeration value="Trucks" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="wppcode">
+        <xs:restriction base="xs:string">
+            <!-- Meal Hours-->
+            <xs:enumeration value="MH" />
+            <!-- Over Time-->
+            <xs:enumeration value="OT" />
+            <!-- Premium Time-->
+            <xs:enumeration value="PT" />
+            <!-- Straight Time-->
+            <xs:enumeration value="ST" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="towagecode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Sea" />
+            <xs:enumeration value="River" />
+            <xs:enumeration value="Docking/Berthing" />
+            <xs:enumeration value="Channel" />
+            <xs:enumeration value="In Assistance" />
+            <xs:enumeration value="Docking" />
+            <xs:enumeration value="Undocking" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="pilotscode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Sea" />
+            <xs:enumeration value="River" />
+            <xs:enumeration value="Channel" />
+            <xs:enumeration value="Docking/Berthing" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="linemencode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NO" />
+            <xs:enumeration value="YES" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cshiftyardtype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PRIOR" />
+            <xs:enumeration value="DURING" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cshifttype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Shift" />
+            <xs:enumeration value="Restow" />
+            <xs:enumeration value="Lashing Box" />
+            <xs:enumeration value="Twist Lock Box" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="vshifttype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Anchor-&gt;Anchor" />
+            <xs:enumeration value="Anchor-&gt;Waiting Berth" />
+            <xs:enumeration value="Anchor-&gt;Terminal" />
+            <xs:enumeration value="Anchor-&gt;Dry Dock" />
+            <xs:enumeration value="Waiting Berth-&gt;Anchor" />
+            <xs:enumeration value="Waiting Berth-&gt;Waiting Berth" />
+            <xs:enumeration value="Waiting Berth-&gt;Terminal" />
+            <xs:enumeration value="Waiting Berth-&gt;Dry Dock" />
+            <xs:enumeration value="Terminal-&gt;Anchor" />
+            <xs:enumeration value="Terminal-&gt;Waiting Berth" />
+            <xs:enumeration value="Terminal-&gt;Terminal" />
+            <xs:enumeration value="Terminal-&gt;Dry Dock" />
+            <xs:enumeration value="Dry Dock-&gt;Anchor" />
+            <xs:enumeration value="Dry Dock-&gt;Waiting Berth" />
+            <xs:enumeration value="Dry Dock-&gt;Terminal" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="simplebittype">
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="0" />
+            <xs:enumeration value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="fieldcodetype">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="10" />
+            <xs:enumeration value="TIME" />
+            <xs:enumeration value="PREDEF" />
+            <xs:enumeration value="TEXT" />
+            <xs:enumeration value="D" />
+            <xs:enumeration value="N" />
+            <xs:enumeration value="S" />
+            <xs:enumeration value="B" />
+            <xs:enumeration value="I" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cntrtypecode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FLATRACK" />
+            <xs:enumeration value="BUNDLE" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cntrmovetypecode">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="20" />
+            <xs:enumeration value="DIMP" />
+            <xs:enumeration value="TRAN" />
+            <xs:enumeration value="NISOF" />
+            <xs:enumeration value="TMCNT" />
+            <xs:enumeration value="DEXP" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="bundlemovetypecode">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="20" />
+            <xs:enumeration value="FLATRACK_DIS" />
+            <xs:enumeration value="FLATRACK_LOAD" />
+            <xs:enumeration value="BUNDLE_DIS" />
+            <xs:enumeration value="BUNDLE_LOAD" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cntrsizecode">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2" />
+            <xs:enumeration value="20" />
+            <xs:enumeration value="40" />
+            <xs:enumeration value="45" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="fullemptystrtype">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1" />
+            <xs:enumeration value="F" />
+            <xs:enumeration value="E" />
+            <xs:enumeration value=" " />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="lodordisstrtype">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="3" />
+            <!-- Load -->
+            <xs:enumeration value="LOD" />
+            <!-- Discharge -->
+            <xs:enumeration value="DIS" />
+            <!-- Transhipment Load -->
+            <xs:enumeration value="TSL" />
+            <!-- Transhipment Discharge -->
+            <xs:enumeration value="TSD" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="bowthrustertype">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:enumeration value="arrival out of order" />
+            <xs:enumeration value="departure out of order" />
+            <xs:enumeration value="arrival in order" />
+            <xs:enumeration value="departure in order" />
+            <xs:enumeration value="Unknown" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="arrcodetype">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+            <!-- Anchor down type=TIME-->
+            <xs:enumeration value="ANCHDOWN" />
+            <!-- Anchor up type=TIME-->
+            <xs:enumeration value="ANCHUP" />
+            <!-- Arrival at Pilot Station [End Sea Passage] type=TIME-->
+            <xs:enumeration value="ARRPILSTA" />
+            <!-- Arrival window (tide, bridge, etc.) finish type=TIME-->
+            <xs:enumeration value="ARRWINFIN" />
+            <!-- Arrival window (tide, bridge, etc.) start type=TIME-->
+            <xs:enumeration value="ARRWINSTA" />
+            <!-- Arrival Bowthruster type=PREDEF-->
+            <xs:enumeration value="BOWTHARR" />
+            <!-- First line ashore type=TIME-->
+            <xs:enumeration value="FIRLINASH" />
+            <!-- Pilots notified type=TIME-->
+            <xs:enumeration value="PILNOT" />
+            <!-- Arrival Pilots/Tugs/Lines ordered for type=TIME-->
+            <xs:enumeration value="PILORDFOR" />
+            <!-- Pre-arrival message to VI sent type=TIME-->
+            <xs:enumeration value="PREARR" />
+            <!-- Reason For Late Arrival type=PREDEF-->
+            <xs:enumeration value="RFLATEARR" />
+            <!-- Drifting From  type=TIME-->
+            <xs:enumeration value="DRIFTFROM" />
+            <!-- Drifting To type=TIME-->
+            <xs:enumeration value="DRIFTTO" />
+            <!-- Dry Dock From type=TIME-->
+            <xs:enumeration value="DRYDOCFRO" />
+            <!-- Dry Dock To type=TIME-->
+            <xs:enumeration value="DRYDOCTO" />
+            <!-- Lay By Berth From type=TIME-->
+            <xs:enumeration value="ARRLAYBFRO" />
+            <!-- Lay By Berth To type=TIME-->
+            <xs:enumeration value="ARRLAYBTO" />
+            <!-- Lost Time Waiting For A Berth type=PREDEF-->
+            <xs:enumeration value="REAFORANC" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="anchoragereasontype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="Weather" />
+            <xs:enumeration value="Pilotage strike" />
+            <xs:enumeration value="Pilot shortage" />
+            <xs:enumeration value="Tug Strike" />
+            <xs:enumeration value="Tug Shortage" />
+            <xs:enumeration value="Berth Congestion - Off window" />
+            <xs:enumeration value="Berth congestion - On window" />
+            <xs:enumeration value="Tidal restrictions" />
+            <xs:enumeration value="Bunkering" />
+            <xs:enumeration value="Harbour traffic" />
+            <xs:enumeration value="Authorities" />
+            <xs:enumeration value="Quarantine" />
+            <xs:enumeration value="Less than 1 hour" />
+            <xs:enumeration value="Arrived ahead of schedule" />
+            <xs:enumeration value="To avoid additional pilotage costs" />
+            <xs:enumeration value="To avoid additional towage costs" />
+            <xs:enumeration value="To avoid additional terminal costs" />
+            <xs:enumeration value="To avoid other port costs" />
+            <xs:enumeration value="Vessel repairs" />
+            <xs:enumeration value="Preferred berthing" />
+            <xs:enumeration value="Waiting for Transhipment Cargo" />
+            <xs:enumeration value="Navigation Restriction" />
+            <xs:enumeration value="Public Holidays" />
+            <xs:enumeration value="Balast/debalast" />
+            <xs:enumeration value="Geneva instructions" />
+            <xs:enumeration value="Stevedore strike" />
+            <xs:enumeration value="Waiting for shift start" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="opscodetype">
+        <xs:restriction base="xs:string">
+            <!-- Boarding agent on board type=TIME-->
+            <xs:enumeration value="BOAAGEONBOA" />
+            <!-- Docked [All Fast] at terminal type=TIME-->
+            <xs:enumeration value="DOCATTER" />
+            <!-- Docked side to [Port / Starboard] type=PREDEF-->
+            <xs:enumeration value="DOCSIDTO" />
+            <!-- Entered cleared with customs type=TIME-->
+            <xs:enumeration value="ENTCLECUS" />
+            <!-- Estimated time of operations completion type=TIME-->
+            <xs:enumeration value="ESSTTIMOPSCOM" />
+            <!-- Gangway Down type=TIME-->
+            <xs:enumeration value="GANWAYDOWN" />
+            <!-- Gangs ordered for type=TIME-->
+            <xs:enumeration value="GANORDFOR" />
+            <!-- Lashing completed type=TIME-->
+            <xs:enumeration value="LASCOMP" />
+            <!-- Lashing Done By type=PREDEF-->
+            <xs:enumeration value="LASCOMPBY" />
+            <!-- Number of Lashers type=INTEGER-->
+            <xs:enumeration value="NLASCOMP" />
+            <!-- Number of Watchmen type=PREDEF-->
+            <xs:enumeration value="NWATCHMEN" />
+            <!-- Operations commence type=TIME-->
+            <xs:enumeration value="OPECOM" />
+            <!-- Operations completed type=TIME-->
+            <xs:enumeration value="OPECOMP" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="shiftopscodetype">
+        <xs:restriction base="xs:string">
+            <!-- Sailed from berth type=TIME-->
+            <xs:enumeration value="OPVSVESUNDOC" />
+            <!-- Docked side to [Port / Starboard] type=PREDEF-->
+            <xs:enumeration value="OPVSDOCSIDTO" />
+            <!-- Docked [All Fast] at terminal type=TIME-->
+            <xs:enumeration value="OPVSDOCATTER" />
+            <!-- Boarding agent on board type=TIME-->
+            <xs:enumeration value="OPVSBOAAGEONBOA" />
+            <!-- Gangs ordered for type=TIME-->
+            <xs:enumeration value="OPVSGANORDFOR" />
+            <!-- Gangway Down type=TIME-->
+            <xs:enumeration value="OPVSGANWAYDOWN" />
+            <!-- Operations commence type=TIME-->
+            <xs:enumeration value="OPVSOPECOM" />
+            <!-- Estimated time of operations completion type=TIME-->
+            <xs:enumeration value="OPVSESSTTIMOPSCOM" />
+            <!-- Entered cleared with customs type=TIME-->
+            <xs:enumeration value="OPVSENTCLECUS" />
+            <!-- Operations completed type=TIME-->
+            <xs:enumeration value="OPVSOPECOMP" />
+            <!-- Lashing completed type=TIME-->
+            <xs:enumeration value="OPVSLASCOMP" />
+            <!-- Number of Lashing Rods type=INTEGER-->
+            <xs:enumeration value="NOPVSLASCOMP" />
+            <!-- Lashing Done By type=PREDEF-->
+            <xs:enumeration value="OPVSLASCOMPBY" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="depcodetype">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+            <!-- Boarding agent off vessel type=TIME-->
+            <xs:enumeration value="BOAAGEOFFVES" />
+            <!-- Departure Bowthruster type=PREDEF-->
+            <xs:enumeration value="BOWTHDEP" />
+            <!-- Departure Anchor Down type=TIME-->
+            <xs:enumeration value="DEPANCRDOWN" />
+            <!-- Departure Anchor Up type=TIME-->
+            <xs:enumeration value="DEPANCRUP" />
+            <!-- Departure Pilots/Tugs/Lines ordered for type=TIME-->
+            <xs:enumeration value="DEPPILTUGORDFOR" />
+            <!-- Departure window (tide, brige, etc) finish type=TIME-->
+            <xs:enumeration value="DEPWINFIN" />
+            <!-- Departure window (tide, brige, etc) start type=TIME-->
+            <xs:enumeration value="DEPWINSTA" />
+            <!-- ETA Next Port Pilot Station type=TIME-->
+            <xs:enumeration value="ETANEXTPORT" />
+            <!-- Next port eMail type=PREDEF-->
+            <xs:enumeration value="NEXTPORTEM" />
+            <!-- Reason For Late Departure type=PREDEF-->
+            <xs:enumeration value="RFLATEDEP" />
+            <!-- Vessel sailed from this port type=TIME-->
+            <xs:enumeration value="VESSAIFROTHIPOR" />
+            <!-- Sailed from berth type=TIME-->
+            <xs:enumeration value="VESUNDOC" />
+            <!-- Lost Time Waiting To Sail type=PREDEF-->
+            <xs:enumeration value="DEPLOSTTIME" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="losttimetype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="Authorities" />
+            <xs:enumeration value="Less than 45 minutes to prepare the vessel for sailing" />
+            <xs:enumeration value="Pilot shortage" />
+            <xs:enumeration value="Strike" />
+            <xs:enumeration value="To avoid additional pilotage costs" />
+            <xs:enumeration value="To avoid additional towage costs" />
+            <xs:enumeration value="Tug Shortage" />
+            <xs:enumeration value="Vessel repairs, including cleaning" />
+            <xs:enumeration value="Weather" />
+            <xs:enumeration value="Agency mistake" />
+            <xs:enumeration value="Waiting for Pilot" />
+            <xs:enumeration value="Waiting for lashing completion" />
+            <xs:enumeration value="Waiting for crew" />
+            <xs:enumeration value="Stowaways control" />
+            <xs:enumeration value="Waiting for booked departure / canal passage" />
+            <xs:enumeration value="Delay at master request" />
+            <xs:enumeration value="Navigation Restriction" />
+            <xs:enumeration value="Preparing main engine" />
+            <xs:enumeration value="Reefer malfunction" />
+            <xs:enumeration value="Vessel off hired" />
+            <xs:enumeration value="Vessel supplies, including bunkers" />
+            <xs:enumeration value="Waiting at berth (GVA instruction, ahead of schedule, to avoid extra charges)" />
+            <xs:enumeration value="Public holidays" />
+			<xs:enumeration value="Terminal error" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="liquidscodetype">
+        <xs:restriction base="xs:string">
+            <!-- Heavy Fuel Oil -->
+            <xs:enumeration value="HFO" />
+            <!-- Marine Gas Oil -->
+            <xs:enumeration value="MGO" />
+            <!-- Marine Diesel Oil -->
+            <xs:enumeration value="MDO" />
+            <!-- Fresh Water -->
+            <xs:enumeration value="FW" />
+            <!-- Ballast -->
+            <xs:enumeration value="BALLAST" />
+            <!-- Intermediate Fuel Oil -->
+            <xs:enumeration value="IFO" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="operliquidscodetype">
+        <xs:restriction base="xs:string">
+            <!-- Heavy Fuel Oil -->
+            <xs:enumeration value="HFO" />
+            <!-- Marine Gas Oil -->
+            <xs:enumeration value="MGO" />
+            <!-- Marine Diesel Oil -->
+            <xs:enumeration value="MDO" />
+            <!-- Fresh Water -->
+            <xs:enumeration value="FW" />
+            <!-- Ballast -->
+            <xs:enumeration value="BALLAST" />
+            <!-- Intermediate Fuel Oil -->
+            <xs:enumeration value="IFO" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="draftcodetype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FWD" />
+            <xs:enumeration value="AFT" />
+            <xs:enumeration value="MID" />
+            <xs:enumeration value="AIR" />
+            <xs:enumeration value="DISPLACEMENT" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="rollreasoncode">
+        <xs:restriction base="xs:string">
+            <!-- AES/Master - Missing-->
+            <xs:enumeration value="AES" />
+            <!-- Change in Rotation-->
+            <xs:enumeration value="CHANGEROT" />
+            <!-- Clerical Error-->
+            <xs:enumeration value="CLEERROR" />
+            <!-- Commercial-->
+            <xs:enumeration value="COMM" />
+            <!-- Customs Hold-->
+            <xs:enumeration value="CUSTHOLD" />
+            <!-- Damaged/Safety-->
+            <xs:enumeration value="DAMSAF" />
+            <!-- Hazmat Rejection-->
+            <xs:enumeration value="HAZMAT" />
+            <!-- Omit POL-->
+            <xs:enumeration value="OPOL" />
+            <!-- Omit Port-->
+            <xs:enumeration value="OPORT" />
+            <!-- Operations/Planning-->
+            <xs:enumeration value="OPPLAN" />
+            <!-- Over Receiving-->
+            <xs:enumeration value="OVERREC" />
+            <!-- Shipper Request-->
+            <xs:enumeration value="SHIPREQ" />
+            <!-- Titles - Missing-->
+            <xs:enumeration value="TITLE" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="terminalactivitytype">
+        <xs:restriction base="xs:string">
+            <!-- Change of Status/Shut Out/Renomination-->
+            <xs:enumeration value="CSR" />
+            <!-- Custom Inspection-->
+            <xs:enumeration value="CST" />
+            <!-- Emergency Repair-->
+            <xs:enumeration value="EGR" />
+            <!-- Extra move/Extra Handling-->
+            <xs:enumeration value="EXT" />
+            <!-- Fumigation-->
+            <xs:enumeration value="FUM" />
+            <!-- Plugging Container-->
+            <xs:enumeration value="PGC" />
+            <!-- Transportation Between 2 Terminals-->
+            <xs:enumeration value="TBT" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="containersizetype">
+        <xs:restriction base="xs:string">
+            <!-- 10 FEET DV -->
+            <xs:enumeration value="10DV" />
+            <!-- 10 Feet Reefer -->
+            <xs:enumeration value="10RE" />
+            <!-- 10 Feet Tank Container -->
+            <xs:enumeration value="10TK" />
+            <!-- 10' Half Height Tank -->
+            <xs:enumeration value="10TK" />
+            <!-- 20'  Ventilated, Non-mechanical -->
+            <xs:enumeration value="20VE" />
+            <!-- 20' Box 8ft -->
+            <xs:enumeration value="20DV" />
+            <!-- 20' Domino F/R 30MGW -->
+            <xs:enumeration value="20FL" />
+            <!-- 20' Dry Bulk Container -->
+            <xs:enumeration value="20BV" />
+            <!-- 20' Dry Van (8/6) -->
+            <xs:enumeration value="20DV" />
+            <!-- 20' Dry Van Palletwide -->
+            <xs:enumeration value="20DV" />
+            <!-- 20' Fixed End Flat -->
+            <xs:enumeration value="20FL" />
+            <!-- 20' Flat Collapsible -->
+            <xs:enumeration value="20FL" />
+            <!-- 20' Freestanding Post Flat Rack -->
+            <xs:enumeration value="20FL" />
+            <!-- 20' Half Height -->
+            <xs:enumeration value="20HH" />
+            <!-- 20' Half Height Heated Bitume Tank (termco) -->
+            <xs:enumeration value="20TK" />
+            <!-- 20' Half Height Platform Flat -->
+            <xs:enumeration value="20PL" />
+            <!-- 20' Half Height Thermal Tank -->
+            <xs:enumeration value="20TK" />
+            <!-- 20' Half Heightf Open Top -->
+            <xs:enumeration value="20OT" />
+            <!-- 20' HC Palletwide -->
+            <xs:enumeration value="20HC" />
+            <!-- 20' High Cube -->
+            <xs:enumeration value="20HC" />
+            <!-- 20' High Cube Reefer -->
+            <xs:enumeration value="20HR" />
+            <!-- 20' IN Insulated -->
+            <xs:enumeration value="20IS" />
+            <!-- 20' Open Side -->
+            <xs:enumeration value="20OS" />
+            <!-- 20' Open Top -->
+            <xs:enumeration value="20OT" />
+            <!-- 20' Reefer -->
+            <xs:enumeration value="20RE" />
+            <!-- 20' Tank Container, Dangerous Cargo -->
+            <xs:enumeration value="20TK" />
+            <!-- 20' Tank Container, Non-dangerous Cargo -->
+            <xs:enumeration value="20TK" />
+            <!-- 20' VE Ventilated -->
+            <xs:enumeration value="20VE" />
+            <!-- 20'HC TANKS (9'6") DANGEROUS CARGO -->
+            <xs:enumeration value="20TK" />
+            <!-- 20FT POWER PACK -->
+            <xs:enumeration value="20PP" />
+            <!-- 20X8.5 TANK DANGEROUS LIQUID MIN 1.5 BAR -->
+            <xs:enumeration value="20TK" />
+            <!-- 30FT DRY VAN -->
+            <xs:enumeration value="30DV" />
+            <!-- 30FT Power Pack -->
+            <xs:enumeration value="30PP" />
+            <!-- 40 High Cube Open Top -->
+            <xs:enumeration value="40HC" />
+            <!-- 40' Bulk Van -->
+            <xs:enumeration value="40BV" />
+            <!-- 40' Collapsible Flat Rack -->
+            <xs:enumeration value="40FL" />
+            <!-- 40' Collapsible Stack Bed -->
+            <xs:enumeration value="40FL" />
+            <!-- 40' Dry Van -->
+            <xs:enumeration value="40DV" />
+            <!-- 40' Fixed End Flat Rack -->
+            <xs:enumeration value="40FL" />
+            <!-- 40' Flat Fixed End High Cube -->
+            <xs:enumeration value="40FL" />
+            <!-- 40' Flat Rack Fixed Standing Post -->
+            <xs:enumeration value="40FL" />
+            <!-- 40' Half Height -->
+            <xs:enumeration value="40HH" />
+            <!-- 40' Half Height CYLINDER TK  (DANGEROUS CARGO) -->
+            <xs:enumeration value="40TK" />
+            <!-- 40' Half Height Platform Flat -->
+            <xs:enumeration value="40PL" />
+            <!-- 40' High Cube -->
+            <xs:enumeration value="40HC" />
+            <!-- 40' High Cube Palletwide -->
+            <xs:enumeration value="40HC" />
+            <!-- 40' High Cube Reefer -->
+            <xs:enumeration value="40HR" />
+            <!-- 40' Insulated -->
+            <xs:enumeration value="40IS" />
+            <!-- 40' Open Side -->
+            <xs:enumeration value="40OS" />
+            <!-- 40' Open Top -->
+            <xs:enumeration value="40OT" />
+            <!-- 40' Palletwide -->
+            <xs:enumeration value="40DV" />
+            <!-- 40' Reefer -->
+            <xs:enumeration value="40RE" />
+            <!-- 40' Tank Container, Dangerous Cargo -->
+            <xs:enumeration value="40TK" />
+            <!-- 40' Tank Container, Non-dangerous Cargo -->
+            <xs:enumeration value="40TK" />
+            <!-- 40' Ventilated -->
+            <xs:enumeration value="40VE" />
+            <!-- 40FT Power Pack (DV) -->
+            <xs:enumeration value="40PP" />
+            <!-- 40FT Power Pack (HC) -->
+            <xs:enumeration value="40PP" />
+            <!-- 45' Dry Van (STD) -->
+            <xs:enumeration value="45DV" />
+            <!-- 45' HIGH CUBE -->
+            <xs:enumeration value="45HC" />
+            <!-- 45FT HIGH CUBE REEFER -->
+            <xs:enumeration value="45HR" />
+            <!-- 45HC PALLETWIDE LEG1 -->
+            <xs:enumeration value="40HH" />
+            <!-- 53FT OPEN SIDES -->
+            <xs:enumeration value="53OS" />
+            <!-- 9 M3 Containers -->
+            <xs:enumeration value="00XX" />
+            <!-- Reefer Tank (20 X 8.5) Dangerous Liquid (Test 6.00 BAR) -->
+            <xs:enumeration value="20TK" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="tareasontype">
+        <xs:restriction base="xs:string">
+            <!-- Custom Inspection-->
+            <xs:enumeration value="CUSTOMINSPECTION" />
+            <!-- Other-->
+            <xs:enumeration value="OTHER" />
+            <!-- Roll Over (at T/S Port)-->
+            <xs:enumeration value="ROLLOVERTS" />
+            <!-- Scanning/X-Ray-->
+            <xs:enumeration value="XRAY" />
+            <!-- Shortshipment (at POL)-->
+            <xs:enumeration value="SHORTSHIPPOL" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cisubopttype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Crane intensity was optimal" />
+            <xs:enumeration value="Insufficient gangs" />
+            <xs:enumeration value="Other vessels prioritized" />
+            <xs:enumeration value="Saving overtime costs" />
+            <xs:enumeration value="Vessel had time" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="startoptype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="No changes made" />
+            <xs:enumeration value="Additions" />
+            <xs:enumeration value="Cuts" />
+            <xs:enumeration value="Changes" />
+            <xs:enumeration value="Additions, Cuts and or Changes" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="reasonlivetype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="No live connections" />
+            <xs:enumeration value="Commercial request" />
+            <xs:enumeration value="Network need" />
+            <xs:enumeration value="Inbound vessel delay" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="reasoncutruntype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="No Cut and run" />
+            <xs:enumeration value="bad weather" />
+            <xs:enumeration value="Berth competition" />
+            <xs:enumeration value="Canal Passage" />
+            <xs:enumeration value="Cargo Readiness" />
+            <xs:enumeration value="Crane Breakdown" />
+            <xs:enumeration value="Lack of gangs" />
+            <xs:enumeration value="Port close" />
+            <xs:enumeration value="Productivity issues" />
+            <xs:enumeration value="Safety and Security" />
+            <xs:enumeration value="Schedule integrity" />
+            <xs:enumeration value="Terminal congestion" />
+            <xs:enumeration value="Tide" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="headertype">
+        <xs:sequence>
+            <xs:element name="vessel" type="xs:string" />
+            <xs:element name="voyage" type="xs:string" />
+            <xs:element name="portun" type="xs:string" />
+            <xs:element name="exportvoyage" type="xs:string" />
+            <xs:element name="master" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="marseclevel" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="berth" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="owner" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="lengthoverall" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="stevedoresuperintendent" type="xs:string" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="containeritemtype">
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="type" type="lodordisstrtype" use="required" />
+        <xs:attribute name="isocode" type="xs:string" use="required" />
+        <xs:attribute name="typeabrev" type="xs:string" use="required" />
+        <xs:attribute name="fullempty" type="fullemptystrtype" use="required" />
+        <xs:attribute name="operatorcode" type="operatorcode" use="required" />
+        <xs:attribute name="oogcargo" type="xs:boolean" use="required" />
+        <xs:attribute name="damagedcargo" type="xs:boolean" use="required" />
+        <xs:attribute name="imo" type="xs:boolean" use="required" />
+        <xs:attribute name="soc" type="xs:boolean" use="required" />
+        <xs:attribute name="coastalcargo" type="xs:boolean" use="required" />
+        <xs:attribute name="grossweight" type="xs:decimal" use="required" />
+        <xs:attribute name="pol" type="xs:string" use="required" />
+        <xs:attribute name="pod" type="xs:string" use="required" />
+        <xs:attribute name="ts1" type="xs:string" use="optional" />
+        <xs:attribute name="ts2" type="xs:string" use="optional" />
+        <xs:attribute name="ts3" type="xs:string" use="optional" />
+        <xs:attribute name="ts4" type="xs:string" use="optional" />
+        <xs:attribute name="ts5" type="xs:string" use="optional" />
+        <xs:attribute name="loadterminalcode" type="xs:string" use="optional" />
+        <xs:attribute name="dischargeterminalcode" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="containerstype">
+        <xs:sequence>
+            <xs:element name="container" type="containeritemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="arrtimelineitemtype">
+        <xs:attribute name="remarkscode" type="arrcodetype" use="required" />
+        <xs:attribute name="type" type="fieldcodetype" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="delaycode" type="detcode" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="arrtimelinetype">
+        <xs:sequence>
+            <xs:element name="field" type="arrtimelineitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="draftitemtype">
+        <xs:attribute name="type" type="draftcodetype" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="unit" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="drafttype">
+        <xs:sequence>
+            <xs:element name="item" type="draftitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="liquidsitemtype">
+        <xs:attribute name="type" type="liquidscodetype" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="unit" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="liquidstype">
+        <xs:sequence>
+            <xs:element name="item" type="liquidsitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="operliquidsitemtype">
+        <xs:attribute name="type" type="operliquidscodetype" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="unit" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="operliquidstype">
+        <xs:sequence>
+            <xs:element name="item" type="operliquidsitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="pilotsitemtype">
+        <xs:attribute name="type" type="pilotscode" use="required" />
+        <xs:attribute name="number" type="xs:int" use="required" />
+        <xs:attribute name="orderedfor" type="xs:dateTime" use="optional" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="comment" type="xs:string" use="required" />
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="index" type="xs:int" use="required" />
+    </xs:complexType>
+    <xs:complexType name="pilotstype">
+        <xs:sequence>
+            <xs:element name="pilot" type="pilotsitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="cancelled" type="xs:boolean" use="required" />
+    </xs:complexType>
+    <xs:complexType name="towagesitemtype">
+        <xs:attribute name="type" type="towagecode" use="required" />
+        <xs:attribute name="number" type="xs:int" use="required" />
+        <xs:attribute name="orderedfor" type="xs:dateTime" use="optional" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="comment" type="xs:string" use="required" />
+        <xs:attribute name="tugtype" type="xs:string" use="optional" />
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="bowthrusternonop" type="simplebittype" use="required" />
+        <xs:attribute name="index" type="xs:int" use="required" />
+    </xs:complexType>
+    <xs:complexType name="towagestype">
+        <xs:sequence>
+            <xs:element name="tug" type="towagesitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="cancelled" type="xs:boolean" use="required" />
+    </xs:complexType>
+    <xs:complexType name="linemenitemtype">
+        <xs:attribute name="type" type="linemencode" use="required" />
+        <xs:attribute name="number" type="xs:int" use="required" />
+        <xs:attribute name="orderedfor" type="xs:dateTime" use="optional" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="comment" type="xs:string" use="required" />
+        <xs:attribute name="index" type="xs:int" use="required" />
+    </xs:complexType>
+    <xs:complexType name="linesmentype">
+        <xs:sequence>
+            <xs:element name="linemen" type="linemenitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="cancelled" type="xs:boolean" use="required" />
+    </xs:complexType>
+    <xs:complexType name="arrivaltype">
+        <xs:sequence>
+            <xs:element name="timeline" type="arrtimelinetype" />
+            <xs:element name="draft" type="drafttype" />
+            <xs:element name="liquids" type="liquidstype" />
+            <xs:element name="pilots" type="pilotstype" />
+            <xs:element name="towages" type="towagestype" />
+            <xs:element name="linesmen" type="linesmentype" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="opstimelineitemtype">
+        <xs:attribute name="remarkscode" type="opscodetype" use="required" />
+        <xs:attribute name="type" type="fieldcodetype" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="delaycode" type="detcode" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="opstimelinetype">
+        <xs:sequence>
+            <xs:element name="field" type="opstimelineitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="operationstype">
+        <xs:sequence>
+            <xs:element name="timeline" type="opstimelinetype" />
+            <xs:element name="liquids" type="operliquidstype" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="deptimelineitemtype">
+        <xs:attribute name="remarkscode" type="depcodetype" use="required" />
+        <xs:attribute name="type" type="fieldcodetype" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="delaycode" type="detcode" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="deptimelinetype">
+        <xs:sequence>
+            <xs:element name="field" type="deptimelineitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="bunkertype">
+        <xs:sequence>
+            <xs:element name="stemmed" type="xs:boolean" />
+            <xs:element name="ordered" type="xs:dateTime" />
+            <xs:element name="start" type="xs:dateTime" />
+            <xs:element name="completed" type="xs:dateTime" />
+            <xs:element name="remarks" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="departuretype">
+        <xs:sequence>
+            <xs:element name="timeline" type="deptimelinetype" />
+            <xs:element name="draft" type="drafttype" />
+            <xs:element name="liquids" type="liquidstype" />
+            <xs:element name="pilots" type="pilotstype" />
+            <xs:element name="towages" type="towagestype" />
+            <xs:element name="linesmen" type="linesmentype" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="vesseloffhireitemtype">
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="totalhours" type="xs:int" use="required" />
+        <xs:attribute name="statementissued" type="simplebittype" use="required" />
+        <xs:attribute name="remarks" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="vesseloffhiretype">
+        <xs:sequence>
+            <xs:element name="vessel" type="vesseloffhireitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="shiftopstimelineitemtype">
+        <xs:attribute name="remarkscode" type="shiftopscodetype" use="required" />
+        <xs:attribute name="type" type="fieldcodetype" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="delaycode" type="detcode" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="shiftopstimelinetype">
+        <xs:sequence>
+            <xs:element name="field" type="shiftopstimelineitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="shiftpilotstype">
+        <xs:sequence>
+            <xs:element name="pilot" type="pilotsitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="cancelled" type="xs:boolean" use="required" />
+    </xs:complexType>
+    <xs:complexType name="shifttowagestype">
+        <xs:sequence>
+            <xs:element name="tug" type="towagesitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="cancelled" type="xs:boolean" use="required" />
+    </xs:complexType>
+    <xs:complexType name="shiftlinesmentype">
+        <xs:sequence>
+            <xs:element name="linemen" type="linemenitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="cancelled" type="xs:boolean" use="required" />
+    </xs:complexType>
+    <xs:complexType name="vesselshiftingitemtype">
+        <xs:sequence>
+            <xs:element name="timeline" type="shiftopstimelinetype" />
+            <xs:element name="pilots" type="shiftpilotstype" />
+            <xs:element name="towages" type="shifttowagestype" />
+            <xs:element name="linesmen" type="shiftlinesmentype" />
+        </xs:sequence>
+        <xs:attribute name="type" type="vshifttype" use="required" />
+        <xs:attribute name="pilotsnumber" type="xs:int" use="required" />
+        <xs:attribute name="tugsnumber" type="xs:int" use="required" />
+        <xs:attribute name="mooring" type="xs:boolean" use="required" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="reason" type="xs:string" use="required" />
+        <xs:attribute name="index" type="xs:int" use="required" />
+    </xs:complexType>
+    <xs:complexType name="vesselshiftingtype">
+        <xs:sequence>
+            <xs:element name="shift" type="vesselshiftingitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="safetycomplianceitemtype">
+        <xs:attribute name="code" type="safetytype" use="required" />
+        <xs:attribute name="yesno" type="simplebittype" use="required" />
+        <xs:attribute name="comment" type="xs:string" use="optional" />
+        <xs:attribute name="date" type="xs:dateTime" use="required" />
+    </xs:complexType>
+    <xs:complexType name="safetycompliancetype">
+        <xs:sequence>
+            <xs:element name="item" type="safetycomplianceitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="custominspectionitemtype">
+        <xs:attribute name="code" type="custominspectcode" use="optional" />
+        <xs:attribute name="type" type="fieldcodetype" use="optional" />
+        <xs:attribute name="value" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="custctritem">
+        <xs:attribute name="number" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="customcontainerstype">
+        <xs:sequence>
+            <xs:element name="inspected" type="custctritem" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="custominspectiontype">
+        <xs:sequence>
+            <xs:element name="inspection" type="custominspectionitemtype" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="containers" type="customcontainerstype" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="husbandryitemtype">
+        <xs:attribute name="type" type="fieldcodetype" use="required" />
+        <xs:attribute name="code" type="husbandrycode" use="required" />
+        <xs:attribute name="yesno" type="simplebittype" use="optional" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="cost" type="xs:decimal" use="required" />
+    </xs:complexType>
+    <xs:complexType name="husbandrytype">
+        <xs:sequence>
+            <xs:element name="item" type="husbandryitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="lodordisitemtype">
+        <xs:attribute name="type" type="cntrmovetypecode" use="required" />
+        <xs:attribute name="operator" type="operatorcode" use="required" />
+        <xs:attribute name="containersize" type="cntrsizecode" use="required" />
+        <xs:attribute name="fullempty" type="fullemptystrtype" use="optional" />
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="dischargedetailstype">
+        <xs:sequence>
+            <xs:element name="linecode" type="lodordisitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="loaddetailstype">
+        <xs:sequence>
+            <xs:element name="linecode" type="lodordisitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="gangsplititemtype">
+        <xs:attribute name="craneid" type="xs:int" use="required" />
+        <xs:attribute name="projected" type="xs:string" use="required" />
+        <xs:attribute name="final" type="xs:string" use="required" />
+        <xs:attribute name="stevedoresuperintendent" type="xs:string" use="required" />
+        <xs:attribute name="gangforeman" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="gangsplittype">
+        <xs:sequence>
+            <xs:element name="crane" type="gangsplititemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="yardequipmentitemtype">
+        <xs:attribute name="equipmentcode" type="equipcode" use="required" />
+        <xs:attribute name="cranename" type="xs:string" use="required" />
+        <xs:attribute name="value" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="yardequipmenttype">
+        <xs:sequence>
+            <xs:element name="crane" type="yardequipmentitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="containershiftingitemtype">
+        <xs:attribute name="account" type="shiftaccountcode" use="required" />
+        <xs:attribute name="type" type="cshifttype" use="required" />
+        <xs:attribute name="containersize" type="cntrsizecode" use="optional" />
+        <xs:attribute name="oogmoves" type="xs:string" use="optional" />
+        <xs:attribute name="reason" type="shiftreasoncode" use="required" />
+        <xs:attribute name="value" type="xs:string" use="optional" />
+        <xs:attribute name="fullempty" type="fullemptystrtype" use="optional" />
+        <xs:attribute name="oog" type="simplebittype" use="optional" />
+        <xs:attribute name="reefer" type="simplebittype" use="optional" />
+        <xs:attribute name="damaged" type="simplebittype" use="optional" />
+        <xs:attribute name="imo" type="simplebittype" use="optional" />
+        <xs:attribute name="comments" type="xs:string" use="optional" />
+        <xs:attribute name="notformscaccount" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="containershiftingtype">
+        <xs:sequence>
+            <xs:element name="shift" type="containershiftingitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="bundleshiftitemtype">
+        <xs:attribute name="type" type="bundlemovetypecode" use="required" />
+        <xs:attribute name="containersize" type="cntrsizecode" use="required" />
+        <xs:attribute name="value" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="bundleshifttype">
+        <xs:sequence>
+            <xs:element name="bundle" type="bundleshiftitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="lidmovesitemtype">
+        <xs:attribute name="on" type="xs:int" use="required" />
+        <xs:attribute name="off" type="xs:int" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="lidmovestype">
+        <xs:sequence>
+            <xs:element name="lid" type="lidmovesitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="gangworkitemtype">
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="grosshours" type="xs:string" use="optional" />
+        <xs:attribute name="workingperiodpayrate" type="wppcode" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="gangworktimetype">
+        <xs:sequence>
+            <xs:element name="gang" type="gangworkitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="mechanicitemtype">
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="reefermechanictype">
+        <xs:sequence>
+            <xs:element name="mechanic" type="mechanicitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="gangguaranteeitemtype">
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="shorecrane" type="xs:string" use="required" />
+        <xs:attribute name="comments" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="gangguaranteetype">
+        <xs:sequence>
+            <xs:element name="gang" type="gangguaranteeitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="detentionitemtype">
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="from" type="xs:dateTime" use="required" />
+        <xs:attribute name="to" type="xs:dateTime" use="required" />
+        <xs:attribute name="detentiontype" type="detcode" use="required" />
+        <xs:attribute name="detentionaccount" type="detacctcode" use="required" />
+        <xs:attribute name="workingperiodpayrate" type="wppcode" use="required" />
+		<xs:attribute name="comments" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="gangdetentiontype">
+        <xs:sequence>
+            <xs:element name="gang" type="detentionitemtype" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="remarks" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="containerlistitemtype">
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="damagedcontainertype">
+        <xs:sequence>
+            <xs:element name="dccontainer" type="containerlistitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="bfmovetype">
+        <xs:attribute name="type" type="lodordisstrtype" use="required" />
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="bundledflattype">
+        <xs:sequence>
+            <xs:element name="move" type="bfmovetype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="bfcontainer" type="containerlistitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="activitytype">
+        <xs:attribute name="type" type="terminalactivitytype" use="required" />
+        <xs:attribute name="sizetype" type="containersizetype" use="required" />
+        <xs:attribute name="fullempty" type="fullemptystrtype" use="required" />
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="reason" type="tareasontype" use="required" />
+        <xs:attribute name="comment" type="xs:string" use="required" />
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="tatype">
+        <xs:sequence>
+            <xs:element name="activity" type="activitytype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="rolloveritemtype">
+        <xs:attribute name="terminal" type="xs:string" use="required" />
+        <xs:attribute name="number" type="xs:string" use="required" />
+        <xs:attribute name="size" type="cntrsizecode" use="required" />
+        <xs:attribute name="fullempty" type="fullemptystrtype" use="required" />
+        <xs:attribute name="reasoncode" type="rollreasoncode" use="required" />
+        <xs:attribute name="reasondescription" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="rollovertype">
+        <xs:sequence>
+            <xs:element name="container" type="rolloveritemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="csiyitemtype">
+        <xs:attribute name="type" type="cshiftyardtype" use="required" />
+        <xs:attribute name="containersize" type="cntrsizecode" use="required" />
+        <xs:attribute name="reasoncode" type="yardshiftreasoncode" use="optional" />
+        <xs:attribute name="value" type="xs:int" use="required" />
+    </xs:complexType>
+    <xs:complexType name="csiytype">
+        <xs:sequence>
+            <xs:element name="shift" type="csiyitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="gangsummarytype">
+        <xs:sequence>
+            <xs:element name="gangstart" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="gangfinish" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="operationsstart" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="operationsfinish" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="espitemtype">
+        <xs:attribute name="source" type="xs:string" use="required" />
+        <xs:attribute name="type" type="xs:string" use="required" />
+        <xs:attribute name="info" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="esptype">
+        <xs:sequence>
+            <xs:element name="service" type="espitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="genremitemtype">
+        <xs:attribute name="comment" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:complexType name="genremtype">
+        <xs:sequence>
+            <xs:element name="generalremark" type="genremitemtype" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="summarytype">
+        <xs:sequence>
+            <xs:element name="delay1" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="delay2" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="portmanager" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="planner" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="remarks" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="extraserviceprovided" type="esptype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="containersshiftedinyard" type="csiytype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="gangsummary" type="gangsummarytype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="generalremarks" type="genremtype" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="tetype">
+        <xs:sequence>
+            <xs:element name="Planner_Time_Msc" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Planner_Time_LP" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Terminal_Time" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="CI_Proforma" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="CI_Planner" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="CI_Gang_Availability" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="CI_Sub_Optimal" type="cisubopttype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Starting_Operations" type="startoptype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Quantity_Of_Containers" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Changes_After_Ingate" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Moved_from_Another_Terminal" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Qty_of_Containers_before_Arrival" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Live_Connections" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Reason_for_Live_Connections" type="reasonlivetype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Affect_by_Cut_And_Run" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Reason_For_Cut_and_Run" type="reasoncutruntype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Average_Yard_Utilisation" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Comments" type="xs:string" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    <!--vcidata-->
+    <xs:complexType name="vcidatatype">
+        <xs:sequence>
+            <xs:element name="header" type="headertype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="containers" type="containerstype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="arrival" type="arrivaltype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="operations" type="operationstype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="departure" type="departuretype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="vesseloffhire" type="vesseloffhiretype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="vesselshifting" type="vesselshiftingtype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="safetycompliance" type="safetycompliancetype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="customsinspection" type="custominspectiontype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="husbandry" type="husbandrytype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="dischargedetails" type="dischargedetailstype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="loaddetails" type="loaddetailstype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="gangsplit" type="gangsplittype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="yardequipment" type="yardequipmenttype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="containershifting" type="containershiftingtype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="bundleshifts" type="bundleshifttype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="lidmoves" type="lidmovestype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="gangworkingtimes" type="gangworktimetype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="reefermechanic" type="reefermechanictype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="bunker" type="bunkertype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="gangguarantee" type="gangguaranteetype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="gangdetention" type="gangdetentiontype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="damagedcontainer" type="damagedcontainertype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="bundledflat" type="bundledflattype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="terminalactivities" type="tatype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="summary" type="summarytype" minOccurs="0" maxOccurs="1" />
+            <xs:element name="terminalefficiency" type="tetype" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="version" type="xs:int" use="required" />
+        <xs:attribute name="revision" type="xs:int" use="required" />
+    </xs:complexType>
+    <xs:element name="vcidata" type="vcidatatype" />
+</xs:schema>
