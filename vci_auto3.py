@@ -45,7 +45,7 @@ class VCIGeneratorGUI:
         self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
         
         # 최소 윈도우 크기 설정
-        self.root.minsize(800, 600)
+        self.root.minsize(1200, 700)
         
         # 생성 버튼을 상단에 배치
         self.generate_button = ttk.Button(root, text="Generate XML", command=self.generate_xml)
@@ -186,13 +186,14 @@ class VCIGeneratorGUI:
         for label_text, entry_name in time_fields:
             self.create_datetime_entry(timeline_frame, label_text, entry_name)
 
-        # Lost Time Waiting For A Berth / REAFORANC 드롭다운
+        # Arrival 탭의 REAFORANC 드롭다운
         frame = ttk.Frame(timeline_frame)
         frame.pack(pady=5, fill='x')
-        ttk.Label(frame, text="Lost Time Waiting For A Berth", width=31).pack(side='left')
-        self.reaforanc_var = tk.StringVar(value="Less than 1 hour")
-        ttk.Combobox(frame, textvariable=self.reaforanc_var, width=50,
-                    values=["Less than 1 hour","Berth congestion - On window","Berth Congestion - Off window","Bunkering","Harbour traffic","Authorities","Quarantine","Arrived ahead of schedule","To avoid additional pilotage costs","To avoid additional towage costs","To avoid additional terminal costs","To avoid other port costs","Vessel repairs","Preferred berthing","Waiting for Transhipment Cargo","Navigation Restriction","Public Holidays","Balast/debalast","Geneva instructions","Other"], state="readonly").pack(side='left', padx=35)
+        ttk.Label(frame, text="Lost Time Waiting For A Berth", width=30).pack(side='left')
+        self.arr_reaforanc_var = tk.StringVar(value="Less than 1 hour")  # arr_ 접두어 추가
+        ttk.Combobox(frame, textvariable=self.arr_reaforanc_var,
+                    values=["Less than 1 hour","Berth congestion - On window","Berth Congestion - Off window","Bunkering","Harbour traffic","Authorities","Quarantine","Arrived ahead of schedule","To avoid additional pilotage costs","To avoid additional towage costs","To avoid additional terminal costs","To avoid other port costs","Vessel repairs","Preferred berthing","Waiting for Transhipment Cargo","Navigation Restriction","Public Holidays","Balast/debalast","Geneva instructions","Other"], 
+                    state="readonly", width=30).pack(side='left', padx=40)
 
         # Draft 섹션
         draft_frame = ttk.LabelFrame(self.arrival_tab, text="Draft")
@@ -342,31 +343,49 @@ class VCIGeneratorGUI:
     def setup_departure_tab(self):
         # Timeline 섹션
         timeline_frame = ttk.LabelFrame(self.departure_tab, text="Timeline")
-        timeline_frame.pack(pady=5, fill='x', padx=10)
+        timeline_frame.pack(pady=5, fill='x', padx=70)
         
-        # BOWTHDEP 라디오버튼
+        # BOWTHDEP 드롭다운
         frame = ttk.Frame(timeline_frame)
         frame.pack(pady=5, fill='x')
-        ttk.Label(frame, text="BOWTHDEP", width=20).pack(side='left')
+        ttk.Label(frame, text="Departure Bowthruster", width=30).pack(side='left')
         self.bowthdep_var = tk.StringVar(value="departure in order")
-        
-        radio_frame = ttk.Frame(frame)
-        radio_frame.pack(side='left')
-        ttk.Radiobutton(radio_frame, text="departure in order", variable=self.bowthdep_var,
+        frame2 = ttk.Frame(frame)
+        frame2.pack(side='left')
+        ttk.Radiobutton(frame2, text="departure in order", variable=self.bowthdep_var, 
                        value="departure in order").pack(side='left', padx=5)
-        ttk.Radiobutton(radio_frame, text="departure out of order", variable=self.bowthdep_var,
+        ttk.Radiobutton(frame2, text="departure out of order", variable=self.bowthdep_var,
                        value="departure out of order").pack(side='left', padx=5)
 
-        # 날짜/시간 입력 필드들
-        time_fields = [
-            # ("DEPPILTUGORDFOR", "deppiltugordfor_entry"),
-            # ("BOAAGEOFFVES", "boaageoffves_entry"),
-            ("Sailed From Berth", "vesundoc_entry"), #VESUNDOC
-            # ("VESSAIFROTHIPOR", "vessaifrothipor_entry")
-        ]
-        
-        for label_text, entry_name in time_fields:
-            self.create_datetime_entry(timeline_frame, label_text, entry_name)
+        # Lost Time Waiting To Sail 레이블과 REAFORANC 드롭다운
+        frame = ttk.Frame(timeline_frame)
+        frame.pack(pady=5, fill='x')
+        ttk.Label(frame, text="Lost Time Waiting To Sail", width=30).pack(side='left')
+        self.dep_reaforanc_var = tk.StringVar(value="Less than 1 hour")
+        ttk.Combobox(frame, textvariable=self.dep_reaforanc_var,
+                    values=["Less than 1 hour","Berth congestion - On window","Berth Congestion - Off window","Bunkering","Harbour traffic","Authorities","Quarantine","Arrived ahead of schedule","To avoid additional pilotage costs","To avoid additional towage costs","To avoid additional terminal costs","To avoid other port costs","Vessel repairs","Preferred berthing","Waiting for Transhipment Cargo","Navigation Restriction","Public Holidays","Balast/debalast","Geneva instructions","Other"], 
+                    state="readonly", width=30).pack(side='left', padx=40)
+
+        # 날짜/시간 입력 필드들 - create_datetime_entry 사용
+        # frame = ttk.Frame(timeline_frame)
+        # frame.pack(pady=5, fill='x')
+        # self.deppiltugordfor_entry = self.create_datetime_entry(frame, "DEPPILTUGORDFOR")
+        # self.deppiltugordfor_entry.pack(side='left', padx=40)
+
+        # frame = ttk.Frame(timeline_frame)
+        # frame.pack(pady=5, fill='x')
+        # self.boaageoffves_entry = self.create_datetime_entry(frame, "BOAAGEOFFVES")
+        # self.boaageoffves_entry.pack(side='left', padx=40)
+
+        frame = ttk.Frame(timeline_frame)
+        frame.pack(pady=5, fill='x')
+        self.vesundoc_entry = self.create_datetime_entry(frame, "Sailed From Berth")
+        self.vesundoc_entry.pack(side='left', padx=40)
+
+        # frame = ttk.Frame(timeline_frame)
+        # frame.pack(pady=5, fill='x')
+        # self.vessaifrothipor_entry = self.create_datetime_entry(frame, "VESSAIFROTHIPOR")
+        # self.vessaifrothipor_entry.pack(side='left', padx=40)
 
         # Draft 섹션
         draft_frame = ttk.LabelFrame(self.departure_tab, text="Draft")
@@ -518,13 +537,27 @@ class VCIGeneratorGUI:
             entry.pack(side='left')
             setattr(self, entry_name, entry)
 
-        # Container Shifting 섹션
-        self.shifting_lines_frame = ttk.Frame(self.shifting_tab)
-        self.shifting_lines_frame.pack(pady=5, fill='x', padx=10)
-        
         add_button = ttk.Button(self.shifting_tab, text="Add Shifting Line",
                               command=self.add_shifting_line)
         add_button.pack(pady=5)
+    
+        # Container Shifting 섹션
+        self.shifting_lines_frame = ttk.LabelFrame(self.shifting_tab, text="Container Shifting")
+        self.shifting_lines_frame.pack(pady=5, fill='x', padx=10)
+
+ 
+
+        # Header labels - 한 번만 표시
+        header_frame = ttk.Frame(self.shifting_lines_frame)
+        header_frame.pack(fill='x')
+        
+        headers = ["Account", "Type", "Size", "#", "F/E", "OOG", "RF", "IMO", "Reason"]
+        widths = [11, 10, 7, 5, 7, 6, 5, 5, 50]
+        
+        for header, width in zip(headers, widths):
+            ttk.Label(header_frame, text=header, width=width).pack(side='left', padx=2)
+
+
         
         self.shifting_lines = []
         self.add_shifting_line()  # 초기 라인 하나 추가
@@ -533,53 +566,58 @@ class VCIGeneratorGUI:
         frame = ttk.Frame(self.shifting_lines_frame)
         frame.pack(pady=5, fill='x')
         
-        # 1. Account
+        # Account
         account_var = tk.StringVar(value="MSCU")
         ttk.Combobox(frame, textvariable=account_var,
-                    values=["MSCU"], state="readonly", width=8).pack(side='left', padx=2)
+                    values=["MSCU","ZIMU","HDMU","HLCU","MAEU"], state="readonly", width=8).pack(side='left', padx=2)
         
-        # 2. Type
+        # Type
         type_var = tk.StringVar(value="Restow")
         ttk.Combobox(frame, textvariable=type_var,
                     values=["Restow"], state="readonly", width=8).pack(side='left', padx=2)
         
-        # 3. Container Size
+        # Container Size
         size_var = tk.StringVar(value="40")
         ttk.Combobox(frame, textvariable=size_var,
                     values=["20", "40"], state="readonly", width=4).pack(side='left', padx=2)
         
-        # 4. Value
+        # Value
         value_entry = ttk.Entry(frame, width=4)  # 컨테이너 수량
         value_entry.pack(side='left', padx=2)
         
-        # 5. Full/Empty
+        # Full/Empty
         fe_var = tk.StringVar(value="F")
         ttk.Combobox(frame, textvariable=fe_var,
-                    values=["F", "E"], state="readonly", width=3).pack(side='left', padx=2)
+                    values=["F", "E"], state="readonly", width=3).pack(side='left', padx=10)
         
-        # 6. OOG
+        # OOG
         oog_var = tk.StringVar(value="0")
-        ttk.Combobox(frame, textvariable=oog_var,
-                    values=["0", "1"], state="readonly", width=3).pack(side='left', padx=2)
+        oog_check = ttk.Checkbutton(frame, variable=oog_var, onvalue="1", offvalue="0")
+        oog_check.pack(side='left', padx=10)
         
-        # 7. Reefer
+        # Reefer
         reefer_var = tk.StringVar(value="0")
-        ttk.Combobox(frame, textvariable=reefer_var,
-                    values=["0", "1"], state="readonly", width=3).pack(side='left', padx=2)
+        reefer_check = ttk.Checkbutton(frame, variable=reefer_var, onvalue="1", offvalue="0")
+        reefer_check.pack(side='left', padx=10)
         
-        # 8. IMO
-        imo_var = tk.StringVar(value="0")
-        ttk.Combobox(frame, textvariable=imo_var,
-                    values=["0", "1"], state="readonly", width=3).pack(side='left', padx=2)
+        # IMO
+        imo_var = tk.StringVar(value="0") 
+        imo_check = ttk.Checkbutton(frame, variable=imo_var, onvalue="1", offvalue="0")
+        imo_check.pack(side='left', padx=10)
         
-        # 9. Reason
+        # Reason
         reason_var = tk.StringVar(value="Restow of optional cargo onboard, to maximize vsl capacity")
         ttk.Combobox(frame, textvariable=reason_var,
                     values=["Restow of optional cargo onboard, to maximize vsl capacity"], 
-                    state="readonly", width=50).pack(side='left', padx=2)
+                    state="readonly", width=50).pack(side='left', padx=10)
         
-        # 삭제 버튼
-        delete_button = ttk.Button(frame, text="X",
+        # Not For MSC Account
+        notformscaccount_var = tk.BooleanVar()
+        notformscaccount_check = ttk.Checkbutton(frame, text="Not For MSC", variable=notformscaccount_var)
+        notformscaccount_check.pack(side='left', padx=10)
+        
+        # Delete 버튼
+        delete_button = ttk.Button(frame, text="Delete",
                                  command=lambda: self.delete_shifting_line(frame))
         delete_button.pack(side='left', padx=2)
         
@@ -593,7 +631,8 @@ class VCIGeneratorGUI:
             "oog": oog_var,
             "reefer": reefer_var,
             "imo": imo_var,
-            "reason": reason_var
+            "reason": reason_var,
+            "notformscaccount": notformscaccount_var
         }
         
         self.shifting_lines.append(line_data)
@@ -641,7 +680,7 @@ class VCIGeneratorGUI:
                 self.convert_datetime(self.arrpil_time_entry.get()))
             # self.add_timeline_field(timeline, 'FIRLINASH', 'D', 
             #     self.convert_datetime(self.firline_time_entry.get()))
-            self.add_timeline_field(timeline, 'REAFORANC', 'S', self.reaforanc_var.get())
+            self.add_timeline_field(timeline, 'REAFORANC', 'S', self.arr_reaforanc_var.get())
             
             # Arrival Draft
             draft = SubElement(arrival, 'draft')
@@ -740,9 +779,10 @@ class VCIGeneratorGUI:
                 shift.set('reason', line['reason'].get())
                 shift.set('value', line['value'].get())
                 shift.set('fullempty', line['fe'].get())
-                shift.set('oog', line['oog'].get())
-                shift.set('reefer', line['reefer'].get())
-                shift.set('imo', line['imo'].get())
+                shift.set('oog', 'true' if line['oog'].get() else 'false')
+                shift.set('reefer', 'true' if line['reefer'].get() else 'false')
+                shift.set('imo', 'true' if line['imo'].get() else 'false')
+                shift.set('notformscaccount', 'true' if line['notformscaccount'].get() else 'false')
             
             # Departure 정보 추가
             departure = SubElement(generator.root, 'departure')
@@ -750,14 +790,11 @@ class VCIGeneratorGUI:
             # Departure Timeline
             timeline = SubElement(departure, 'timeline')
             self.add_timeline_field(timeline, 'BOWTHDEP', 'S', self.bowthdep_var.get())
+            self.add_timeline_field(timeline, 'REAFORANC', 'S', self.dep_reaforanc_var.get())
             # self.add_timeline_field(timeline, 'DEPPILTUGORDFOR', 'D', 
             #     self.convert_datetime(self.deppiltugordfor_entry.get()))
-            # self.add_timeline_field(timeline, 'BOAAGEOFFVES', 'D', 
-            #     self.convert_datetime(self.boaageoffves_entry.get()))
             self.add_timeline_field(timeline, 'VESUNDOC', 'D', 
                 self.convert_datetime(self.vesundoc_entry.get()))
-            # self.add_timeline_field(timeline, 'VESSAIFROTHIPOR', 'D', 
-            #     self.convert_datetime(self.vessaifrothipor_entry.get()))
             
             # Departure Draft
             draft = SubElement(departure, 'draft')
