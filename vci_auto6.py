@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from xml.etree.ElementTree import Element, SubElement, ElementTree
-import datetime
+from datetime import datetime, timedelta
 import re
 
-# pyinstaller --onefile --noconsole vci_auto.py   
+# pyinstaller -w -F --add-binary="C:/Users/kod03/AppData/Local/Programs/Python/Python311/tcl/tkdnd2.8;tkdnd2.8" vci_auto6.py
 
 def parse_excel_data(data):
     """
@@ -71,168 +71,116 @@ def parse_excel_data(data):
 
 class VCIXMLGenerator:
     def __init__(self):
-        # 최상위 요소 생성
-        self.root = Element('vcidata')
-        self.root.set('version', '5')
-        self.root.set('revision', '0')
+        self.root = Element('vci')
+        self.root.set('version', '1.0')
+        self.root.set('type', 'VESSEL')
 
     def add_header(self, vessel, voyage, portun, master, berth):
         header = SubElement(self.root, 'header')
-        SubElement(header, 'vessel').text = vessel
-        SubElement(header, 'voyage').text = voyage
-        SubElement(header, 'portun').text = portun
-        SubElement(header, 'master').text = master
-        SubElement(header, 'berth').text = str(berth)
+        vessel_elem = SubElement(header, 'vessel')
+        vessel_elem.text = vessel
+        voyage_elem = SubElement(header, 'voyage')
+        voyage_elem.text = voyage
+        portun_elem = SubElement(header, 'portun')
+        portun_elem.text = portun
+        master_elem = SubElement(header, 'master')
+        master_elem.text = master
+        berth_elem = SubElement(header, 'berth')
+        berth_elem.text = berth
 
 class VCIGeneratorGUI:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("VCI XML Generator")
+    def __init__(self, master):
+        super().__init__(master)
+        self.master = master
+        self.master.title("VCI XML Generator")
         
-        # 현재 날짜값을 저장할 변수 추가
-        self.current_date = ""
+        # Initialize data storage
+        self.gang_operation_data = []
         
-        # 모든 날짜/시간 입력 필드들을 순서대로 저장할 리스트
-        self.all_datetime_entries = []
+        # Create notebook for tabs
+        self.notebook = ttk.Notebook(self)
+        self.notebook.pack(expand=True, fill='both')
         
-        # 윈도우 크기 설정
-        window_width = 400   # 원하는 너비
-        window_height = 900   # 원하는 높이
-        
-        # 화면 중앙에 위치시키기
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
-        center_x = int(screen_width/2 - window_width/2)
-        center_y = int(screen_height/2 - window_height/2)
-        
-        # 윈도우 크기와 위치 설정
-        self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
-        
-        # 최소 윈도우 크기 설정
-        self.root.minsize(1200, 700)
-        
-        # 생성 버튼을 상단에 배치
-        self.generate_button = ttk.Button(root, text="Generate XML", command=self.generate_xml)
-        self.generate_button.pack(pady=10)
-        
-        # 노트북(탭) 생성
-        self.notebook = ttk.Notebook(root)
-        self.notebook.pack(pady=10, expand=True, fill='both')  # fill='both'를 추가하여 가로세로 모두 채우기
-        
-        # 각 섹션별 탭 생성
-        self.header_tab = ttk.Frame(self.notebook)
-        self.arrival_tab = ttk.Frame(self.notebook)
-        self.operations_tab = ttk.Frame(self.notebook)
-        self.departure_tab = ttk.Frame(self.notebook)
-        self.discharge_tab = ttk.Frame(self.notebook)
-        self.load_tab = ttk.Frame(self.notebook)
-        self.shifting_tab = ttk.Frame(self.notebook)
-        
-        # 탭 추가
-        self.notebook.add(self.header_tab, text="Header")
-        self.notebook.add(self.arrival_tab, text="Arrival")
-        self.notebook.add(self.operations_tab, text="Operations")
-        self.notebook.add(self.departure_tab, text="Departure")
-        self.notebook.add(self.discharge_tab, text="Discharge")
-        self.notebook.add(self.load_tab, text="Load")
-        self.notebook.add(self.shifting_tab, text="Shifting")
-        
-        # 각 탭의 내용 초기화
-        self.setup_header_tab()
-        self.setup_arrival_tab()
-        self.setup_operations_tab()
-        self.setup_departure_tab()
-        self.setup_discharge_tab()
-        self.setup_load_tab()
-        self.setup_shifting_tab()
+        # Create tabs
+        self.create_arrival_tab()
+        self.create_operations_tab()
+        self.create_departure_tab()
+        self.create_discharge_tab()
+        self.create_load_tab()
+        self.create_shifting_tab()
 
-        # 클립보드 바인딩 추가
-        self.discharge_tab.bind('<Control-v>', lambda e: self.handle_paste('discharge'))
-        self.load_tab.bind('<Control-v>', lambda e: self.handle_paste('load'))
+    def handle_qc_paste(self, event=None):
+        try:
+            # Get clipboard data
+            clipboard_data = self.clipboard_get()
+            if not clipboard_data.strip():
+                messagebox.showerror("Error", "Clipboard is empty")
+                return
 
-        # 컨테이너 라인 엔트리 초기화
-        self.discharge_entries = []
-        self.load_entries = []
-
-    def setup_header_tab(self):
-        fields = [
-            ("Vessel", "vessel_entry", 20),    # 선박명
-            ("Voyage", "voyage_entry", 20),     # 항해번호
-            ("Port UN", "portun_entry", 20)      # 항구코드
-        ]
-        
-        for i, (label_text, entry_name, width) in enumerate(fields):
-            frame = ttk.Frame(self.header_tab)
-            frame.pack(pady=5, fill='x', padx=10)
+            # Parse clipboard data
+            lines = clipboard_data.strip().split('\n')
+            qc_data = []
             
-            label = ttk.Label(frame, text=label_text, width=15)
-            label.pack(side='left')
+            for line in lines:
+                parts = line.strip().split('\t')
+                if len(parts) >= 2:  # Ensure we have at least start and end time
+                    try:
+                        # Parse start and end times
+                        start_time = datetime.strptime(parts[0].strip(), "%Y%m%d %H%M")
+                        end_time = datetime.strptime(parts[1].strip(), "%Y%m%d %H%M")
+                        qc_data.append((start_time, end_time))
+                    except ValueError as e:
+                        print(f"Error parsing time: {e}")
+                        continue
+
+            if not qc_data:
+                messagebox.showerror("Error", "No valid QC data found in clipboard")
+                return
+
+            # Process QC data to find concurrent operations
+            all_times = []
+            for start, end in qc_data:
+                all_times.append((start, 'start'))
+                all_times.append((end, 'end'))
             
-            entry = ttk.Entry(frame, width=width)  # 너비 지정
-            entry.pack(side='left')
-            setattr(self, entry_name, entry)
+            all_times.sort(key=lambda x: (x[0], x[1] != 'start'))  # Sort by time, prioritizing 'start' events
+            
+            active_qcs = 0
+            self.gang_operation_data = []  # Clear existing data
+            
+            for i in range(len(all_times) - 1):
+                current_time, event = all_times[i]
+                
+                if event == 'start':
+                    active_qcs += 1
+                else:
+                    active_qcs -= 1
+                
+                # Only create entries when there are active QCs
+                if active_qcs > 0:
+                    next_time = all_times[i + 1][0]
+                    
+                    # Add one minute to start time
+                    adjusted_start = current_time + timedelta(minutes=1)
+                    
+                    # Create gang operation entry
+                    gang_entry = {
+                        'number': str(active_qcs),
+                        'start_time': adjusted_start.strftime("%Y%m%d %H%M"),
+                        'end_time': next_time.strftime("%Y%m%d %H%M")
+                    }
+                    self.gang_operation_data.append(gang_entry)
+            
+            messagebox.showinfo("Success", f"Processed {len(self.gang_operation_data)} gang operation entries")
+            
+        except Exception as e:
+            error_msg = f"Error processing clipboard data: {str(e)}"
+            messagebox.showerror("Error", error_msg)
+            print(error_msg)  # For debugging
 
-    def create_datetime_entry(self, parent, label_text, entry_name=None):
-        """날짜/시간 입력 필드 생성 함수"""
-        frame = ttk.Frame(parent)
-        frame.pack(pady=5, fill='x')
-        
-        # 레이블
-        ttk.Label(frame, text=label_text, width=30).pack(side='left')
-        
-        # 입력 필드
-        entry = ttk.Entry(frame, width=13)
-        entry.pack(side='left', padx=40)
-        
-        # 입력 필드에 이벤트 바인딩
-        entry.bind('<FocusIn>', lambda e: self.handle_entry_focus(entry))
-        entry.bind('<KeyRelease>', lambda e: self.handle_date_change(entry))
-        
-        # 전체 날짜/시간 입력 필드 리스트에 순서대로 추가
-        self.all_datetime_entries.append(entry)
-        
-        ttk.Label(frame, text="Format: YYYYMMDD HHMM").pack(side='left', padx=5)
-        
-        if entry_name:
-            setattr(self, entry_name, entry)
-        
-        return entry
-
-    def handle_entry_focus(self, entry):
-        """입력 필드 포커스 처리"""
-        if not entry.get():
-            # 비어있는 경우 현재 날짜 자동 입력
-            if self.current_date:
-                entry.insert(0, self.current_date + " ")
-                entry.icursor(9)  # 커서를 시간 입력 위치로
-        else:
-            # 이미 값이 있는 경우 시간 부분으로 커서 이동
-            entry.icursor(9)
-
-    def handle_date_change(self, entry):
-        """날짜 변경 처리 - 현재 입력 필드 이후의 모든 필드에 새 날짜 적용"""
-        content = entry.get()
-        if len(content) >= 8:
-            new_date = content[:8]
-            if new_date != self.current_date:
-                self.current_date = new_date
-                # 현재 필드의 인덱스 찾기
-                current_index = self.all_datetime_entries.index(entry)
-                # 현재 필드 이후의 모든 필드 업데이트
-                for e in self.all_datetime_entries[current_index + 1:]:
-                    current_content = e.get()
-                    if not current_content:
-                        # 비어있는 필드는 새 날짜만 입력
-                        e.insert(0, self.current_date + " ")
-                    elif len(current_content) >= 8:
-                        # 이미 값이 있는 필드는 날짜 부분만 교체
-                        time_part = current_content[8:] if len(current_content) > 8 else " "
-                        e.delete(0, 'end')
-                        e.insert(0, self.current_date + time_part)
-
-    def setup_arrival_tab(self):
+    def create_arrival_tab(self):
         # Timeline 섹션
-        timeline_frame = ttk.LabelFrame(self.arrival_tab, text="Timeline")
+        timeline_frame = ttk.LabelFrame(self.notebook, text="Timeline")
         timeline_frame.pack(pady=5, fill='x', padx=10)
         
         # BOWTHARR 드롭다운
@@ -268,7 +216,7 @@ class VCIGeneratorGUI:
                     state="readonly", width=30).pack(side='left', padx=40)
 
         # Draft 섹션
-        draft_frame = ttk.LabelFrame(self.arrival_tab, text="Draft")
+        draft_frame = ttk.LabelFrame(self.notebook, text="Draft")
         draft_frame.pack(pady=5, fill='x', padx=10)
         
         draft_fields = [("AFT", "arr_draft_aft_entry"), ("FWD", "arr_draft_fwd_entry")]
@@ -281,7 +229,7 @@ class VCIGeneratorGUI:
             setattr(self, entry_name, entry)
 
         # Pilots 섹션
-        pilots_frame = ttk.LabelFrame(self.arrival_tab, text="Pilots")
+        pilots_frame = ttk.LabelFrame(self.notebook, text="Pilots")
         pilots_frame.pack(pady=5, fill='x', padx=10)
         
         pilot_fields = [("From", "arr_pilot_from_entry"), ("To", "arr_pilot_to_entry")]
@@ -289,7 +237,7 @@ class VCIGeneratorGUI:
             self.create_datetime_entry(pilots_frame, label_text, entry_name)
 
         # Towages 섹션
-        towages_frame = ttk.LabelFrame(self.arrival_tab, text="Towages")
+        towages_frame = ttk.LabelFrame(self.notebook, text="Towages")
         towages_frame.pack(pady=5, fill='x', padx=70)
         
         # Add Tug 버튼 추가
@@ -365,25 +313,34 @@ class VCIGeneratorGUI:
             self.dep_tug_entries = [entry for entry in self.dep_tug_entries 
                                    if entry["Frame"] != frame]
 
-    def setup_operations_tab(self):
+    def create_operations_tab(self):
         # Gang Summary 섹션 (하단)
-        gang_summary_frame = ttk.LabelFrame(self.operations_tab, text="Gang Summary")
+        gang_summary_frame = ttk.LabelFrame(self.notebook, text="Gang Summary")
         gang_summary_frame.pack(pady=5, fill='x', padx=70)
 
         # Timeline 섹션 (상단)
-        timeline_frame = ttk.LabelFrame(self.operations_tab, text="Timeline")
+        timeline_frame = ttk.LabelFrame(self.notebook, text="Timeline")
         timeline_frame.pack(pady=5, fill='x', padx=70)
-        
-        # # Timeline 입력 필드들
-        # frame = ttk.Frame(timeline_frame)
-        # frame.pack(pady=5, fill='x')
-        # self.firstlineatt_entry = self.create_datetime_entry(frame, "FIRSTLINEATT")
-        # self.firstlineatt_entry.pack(side='left', padx=40)
 
-        # frame = ttk.Frame(timeline_frame)
-        # frame.pack(pady=5, fill='x')
-        # self.vesalngbth_entry = self.create_datetime_entry(frame, "VESALNGBTH")
-        # self.vesalngbth_entry.pack(side='left', padx=40)
+        # Gang Operation 섹션 추가
+        gang_operation_frame = ttk.LabelFrame(self.notebook, text="Gang Operation")
+        gang_operation_frame.pack(pady=5, fill='x', padx=70)
+
+        # Gang Operation 라인을 저장할 프레임
+        self.gang_operation_lines_frame = ttk.Frame(gang_operation_frame)
+        self.gang_operation_lines_frame.pack(pady=5, fill='x')
+        
+        # Gang Operation 라인을 저장할 리스트
+        self.gang_operation_lines = []
+
+        # Add Line 버튼 추가
+        add_button = ttk.Button(gang_operation_frame, text="Add Line",
+                              command=lambda: self.add_gang_operation_line())
+        add_button.pack(pady=5)
+
+        # 붙여넣기 이벤트 바인딩
+        gang_operation_frame.bind('<Control-v>', lambda e: self.handle_qc_paste())
+        self.gang_operation_lines_frame.bind('<Control-v>', lambda e: self.handle_qc_paste())
 
         # Operations Start - 먼저 생성
         frame = ttk.Frame(gang_summary_frame)
@@ -414,12 +371,12 @@ class VCIGeneratorGUI:
                     day = date_part[6:8]
                     hour = time_part[:2]
                     minute = time_part[2:4]
-                    ops_start = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
+                    ops_start = datetime(int(year), int(month), int(day), int(hour), int(minute))
                 else:  # ISO 형식
-                    ops_start = datetime.datetime.strptime(ops_start_str, "%Y-%m-%dT%H:%M:%S")
+                    ops_start = datetime.strptime(ops_start_str, "%Y-%m-%dT%H:%M:%S")
                 
                 # 10분 전 시간 계산
-                gang_start = ops_start - datetime.timedelta(minutes=10)
+                gang_start = ops_start - timedelta(minutes=10)
                 
                 # gangstart_entry에 설정
                 self.gangstart_entry.delete(0, tk.END)
@@ -467,12 +424,12 @@ class VCIGeneratorGUI:
                     day = date_part[6:8]
                     hour = time_part[:2]
                     minute = time_part[2:4]
-                    ops_finish = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
+                    ops_finish = datetime(int(year), int(month), int(day), int(hour), int(minute))
                 else:  # ISO 형식
-                    ops_finish = datetime.datetime.strptime(ops_finish_str, "%Y-%m-%dT%H:%M:%S")
+                    ops_finish = datetime.strptime(ops_finish_str, "%Y-%m-%dT%H:%M:%S")
                 
                 # 10분 후 시간 계산
-                gang_finish = ops_finish + datetime.timedelta(minutes=10)
+                gang_finish = ops_finish + timedelta(minutes=10)
                 
                 # gangfinish_entry에 설정
                 self.gangfinish_entry.delete(0, tk.END)
@@ -483,7 +440,7 @@ class VCIGeneratorGUI:
                 self.opecomp_entry.insert(0, ops_finish_str)
                 
                 # Lashing Completed(lascomp_entry)에 10분 후 값 설정
-                lashing_completed = ops_finish + datetime.timedelta(minutes=10)
+                lashing_completed = ops_finish + timedelta(minutes=10)
                 self.lascomp_entry.delete(0, tk.END)
                 self.lascomp_entry.insert(0, lashing_completed.strftime("%Y%m%d %H%M"))
                 
@@ -513,12 +470,8 @@ class VCIGeneratorGUI:
         # 날짜/시간 입력 필드들
         time_fields = [
             ("Docked [All Fast] At Terminal", "docatter_entry"),
-            # ("BOAAGEONBOA", "boaageonboa_entry"),
-            # ("GANORDFOR", "ganordfor_entry"),
             ("Gangway Down", "ganwaydown_entry"),
             ("Operations Commence", "opecom_entry"),
-            # ("ESSTTIMOPSCOM", "essttimopscom_entry"), 
-            # ("ENTCLECUS", "entclecus_entry"),
             ("Operations Completed", "opecomp_entry"),
             ("Lashing Completed", "lascomp_entry")
         ]
@@ -543,12 +496,12 @@ class VCIGeneratorGUI:
                     day = date_part[6:8]
                     hour = time_part[:2]
                     minute = time_part[2:4]
-                    docatter = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
+                    docatter = datetime(int(year), int(month), int(day), int(hour), int(minute))
                 else:  # ISO 형식
-                    docatter = datetime.datetime.strptime(docatter_str, "%Y-%m-%dT%H:%M:%S")
+                    docatter = datetime.strptime(docatter_str, "%Y-%m-%dT%H:%M:%S")
                 
                 # 30분 후 시간 계산
-                gangway_down = docatter + datetime.timedelta(minutes=30)
+                gangway_down = docatter + timedelta(minutes=30)
                 
                 # ganwaydown_entry에 설정
                 self.ganwaydown_entry.delete(0, tk.END)
@@ -561,42 +514,6 @@ class VCIGeneratorGUI:
         # 이벤트 바인딩 - KeyRelease와 FocusOut 모두 바인딩
         self.docatter_entry.bind('<KeyRelease>', update_gangway_down)
         self.docatter_entry.bind('<FocusOut>', update_gangway_down)
-        
-        # Operations Completed 값이 변경될 때마다 Lashing Completed 값을 10분 후로 설정
-        def update_lashing_completed(*args):
-            try:
-                # 입력된 값 가져오기
-                opecomp_str = self.opecomp_entry.get()
-                if not opecomp_str:
-                    return
-                
-                # 입력 형식에 따라 파싱 (YYYYMMDD HHMM 또는 YYYY-MM-DDThh:mm:ss)
-                if len(opecomp_str) == 13 and ' ' in opecomp_str:  # YYYYMMDD HHMM 형식
-                    date_part = opecomp_str[:8]
-                    time_part = opecomp_str[9:]
-                    year = date_part[:4]
-                    month = date_part[4:6]
-                    day = date_part[6:8]
-                    hour = time_part[:2]
-                    minute = time_part[2:4]
-                    opecomp = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
-                else:  # ISO 형식
-                    opecomp = datetime.datetime.strptime(opecomp_str, "%Y-%m-%dT%H:%M:%S")
-                
-                # 10분 후 시간 계산
-                lashing_completed = opecomp + datetime.timedelta(minutes=10)
-                
-                # lascomp_entry에 설정
-                self.lascomp_entry.delete(0, tk.END)
-                self.lascomp_entry.insert(0, lashing_completed.strftime("%Y%m%d %H%M"))
-                
-                print(f"Updated lashing completed to: {lashing_completed.strftime('%Y%m%d %H%M')}")
-            except Exception as e:
-                print(f"Error updating lashing completed: {str(e)}")
-                
-        # 이벤트 바인딩 - KeyRelease와 FocusOut 모두 바인딩
-        self.opecomp_entry.bind('<KeyRelease>', update_lashing_completed)
-        self.opecomp_entry.bind('<FocusOut>', update_lashing_completed)
 
         # LASCOMPBY 라디오버튼
         frame = ttk.Frame(timeline_frame)
@@ -611,9 +528,53 @@ class VCIGeneratorGUI:
         ttk.Radiobutton(radio_frame, text="Vessel Crew", variable=self.lascompby_var,
                        value="Vessel Crew").pack(side='left', padx=5)
 
-    def setup_departure_tab(self):
+    def add_gang_operation_line(self, number="", start_time="", end_time=""):
+        """Gang Operation 라인 추가"""
+        frame = ttk.Frame(self.gang_operation_lines_frame)
+        frame.pack(pady=5, fill='x')
+        
+        # Number 입력
+        number_entry = ttk.Entry(frame, width=8)
+        if number:
+            number_entry.insert(0, str(number))
+        number_entry.pack(side='left', padx=2)
+        
+        # Start Time 입력
+        start_time_entry = ttk.Entry(frame, width=15)
+        if start_time:
+            start_time_entry.insert(0, start_time)
+        start_time_entry.pack(side='left', padx=2)
+        
+        # End Time 입력
+        end_time_entry = ttk.Entry(frame, width=15)
+        if end_time:
+            end_time_entry.insert(0, end_time)
+        end_time_entry.pack(side='left', padx=2)
+        
+        # 삭제 버튼
+        delete_button = ttk.Button(frame, text="X",
+                                 command=lambda: self.delete_gang_operation_line(frame))
+        delete_button.pack(side='left', padx=2)
+        
+        line_data = {
+            "frame": frame,
+            "number": number_entry,
+            "start_time": start_time_entry,
+            "end_time": end_time_entry
+        }
+        
+        self.gang_operation_lines.append(line_data)
+        return line_data
+
+    def delete_gang_operation_line(self, frame):
+        """Gang Operation 라인 삭제"""
+        frame.destroy()
+        self.gang_operation_lines = [line for line in self.gang_operation_lines 
+                                   if line["frame"] != frame]
+
+    def create_departure_tab(self):
         # Timeline 섹션
-        timeline_frame = ttk.LabelFrame(self.departure_tab, text="Timeline")
+        timeline_frame = ttk.LabelFrame(self.notebook, text="Timeline")
         timeline_frame.pack(pady=5, fill='x', padx=70)
         
         # BOWTHDEP 드롭다운
@@ -637,29 +598,13 @@ class VCIGeneratorGUI:
                     values=["Less than 1 hour","Berth congestion - On window","Berth Congestion - Off window","Bunkering","Harbour traffic","Authorities","Quarantine","Arrived ahead of schedule","To avoid additional pilotage costs","To avoid additional towage costs","To avoid additional terminal costs","To avoid other port costs","Vessel repairs","Preferred berthing","Waiting for Transhipment Cargo","Navigation Restriction","Public Holidays","Balast/debalast","Geneva instructions","Other"], 
                     state="readonly", width=30).pack(side='left', padx=40)
 
-        # 날짜/시간 입력 필드들 - create_datetime_entry 사용
-        # frame = ttk.Frame(timeline_frame)
-        # frame.pack(pady=5, fill='x')
-        # self.deppiltugordfor_entry = self.create_datetime_entry(frame, "DEPPILTUGORDFOR")
-        # self.deppiltugordfor_entry.pack(side='left', padx=40)
-
-        # frame = ttk.Frame(timeline_frame)
-        # frame.pack(pady=5, fill='x')
-        # self.boaageoffves_entry = self.create_datetime_entry(frame, "BOAAGEOFFVES")
-        # self.boaageoffves_entry.pack(side='left', padx=40)
-
         frame = ttk.Frame(timeline_frame)
         frame.pack(pady=5, fill='x')
         self.vesundoc_entry = self.create_datetime_entry(frame, "Sailed From Berth")
         self.vesundoc_entry.pack(side='left', padx=40)
 
-        # frame = ttk.Frame(timeline_frame)
-        # frame.pack(pady=5, fill='x')
-        # self.vessaifrothipor_entry = self.create_datetime_entry(frame, "VESSAIFROTHIPOR")
-        # self.vessaifrothipor_entry.pack(side='left', padx=40)
-
         # Draft 섹션
-        draft_frame = ttk.LabelFrame(self.departure_tab, text="Draft")
+        draft_frame = ttk.LabelFrame(self.notebook, text="Draft")
         draft_frame.pack(pady=5, fill='x', padx=10)
         
         draft_fields = [("AFT", "dep_draft_aft_entry"), ("FWD", "dep_draft_fwd_entry")]
@@ -672,7 +617,7 @@ class VCIGeneratorGUI:
             setattr(self, entry_name, entry)
 
         # Pilots 섹션
-        pilots_frame = ttk.LabelFrame(self.departure_tab, text="Pilots")
+        pilots_frame = ttk.LabelFrame(self.notebook, text="Pilots")
         pilots_frame.pack(pady=5, fill='x', padx=10)
         
         pilot_fields = [("From", "dep_pilot_from_entry"), ("To", "dep_pilot_to_entry")]
@@ -680,7 +625,7 @@ class VCIGeneratorGUI:
             self.create_datetime_entry(pilots_frame, label_text, entry_name)
 
         # Towages 섹션
-        towages_frame = ttk.LabelFrame(self.departure_tab, text="Towages")
+        towages_frame = ttk.LabelFrame(self.notebook, text="Towages")
         towages_frame.pack(pady=5, fill='x', padx=70)
         
         # Add Tug 버튼 추가
@@ -712,17 +657,17 @@ class VCIGeneratorGUI:
         entries["Frame"] = tug_frame
         self.dep_tug_entries.append(entries)
 
-    def setup_discharge_tab(self):
+    def create_discharge_tab(self):
         # 컨테이너 라인 프레임
-        self.discharge_lines_frame = ttk.Frame(self.discharge_tab)
+        self.discharge_lines_frame = ttk.Frame(self.notebook)
         self.discharge_lines_frame.pack(pady=5, fill='x', padx=10)
         
         # 초기 컨테이너 라인은 생성하지 않음
         self.discharge_lines = []
 
-    def setup_load_tab(self):
+    def create_load_tab(self):
         # 컨테이너 라인 프레임
-        self.load_lines_frame = ttk.Frame(self.load_tab)
+        self.load_lines_frame = ttk.Frame(self.notebook)
         self.load_lines_frame.pack(pady=5, fill='x', padx=10)
         
         # 초기 컨테이너 라인은 생성하지 않음
@@ -789,9 +734,9 @@ class VCIGeneratorGUI:
             self.load_lines = [line for line in self.load_lines 
                              if line["frame"] != frame]
 
-    def setup_shifting_tab(self):
+    def create_shifting_tab(self):
         # Lid Moves 섹션
-        lid_frame = ttk.LabelFrame(self.shifting_tab, text="Lid Moves")
+        lid_frame = ttk.LabelFrame(self.notebook, text="Lid Moves")
         lid_frame.pack(pady=5, fill='x', padx=10)
         
         lid_fields = [("On", "lid_on_entry"), ("Off", "lid_off_entry")]
@@ -803,12 +748,12 @@ class VCIGeneratorGUI:
             entry.pack(side='left')
             setattr(self, entry_name, entry)
 
-        add_button = ttk.Button(self.shifting_tab, text="Add Shifting Line",
+        add_button = ttk.Button(self.notebook, text="Add Shifting Line",
                               command=self.add_shifting_line)
         add_button.pack(pady=5)
     
         # Container Shifting 섹션
-        self.shifting_lines_frame = ttk.LabelFrame(self.shifting_tab, text="Container Shifting")
+        self.shifting_lines_frame = ttk.LabelFrame(self.notebook, text="Container Shifting")
         self.shifting_lines_frame.pack(pady=5, fill='x', padx=10)
 
         # Header labels - 한 번만 표시
@@ -934,248 +879,49 @@ class VCIGeneratorGUI:
 
     def generate_xml(self):
         try:
-            # XML 생성기 초기화
+            # Create XML generator
             generator = VCIXMLGenerator()
             
-            # Header 정보 추가
+            # Add header information
             generator.add_header(
                 vessel=self.vessel_entry.get(),
                 voyage=self.voyage_entry.get(),
                 portun=self.portun_entry.get(),
-                master=".",  # 고정값
-                berth="1"    # 고정값
+                master=self.master_entry.get(),
+                berth=self.berth_entry.get()
             )
             
-            # Arrival 정보 추가
-            arrival = SubElement(generator.root, 'arrival')
-            
-            # Arrival Timeline
-            timeline = SubElement(arrival, 'timeline')
-            self.add_timeline_field(timeline, 'BOWTHARR', 'S', self.bowtharr_var.get())
-            # self.add_timeline_field(timeline, 'PILNOT', 'D', 
-            #     self.convert_datetime(self.pilot_time_entry.get()))
-            # self.add_timeline_field(timeline, 'PILORDFOR', 'D', 
-            #     self.convert_datetime(self.pilord_time_entry.get()))
-            self.add_timeline_field(timeline, 'ARRPILSTA', 'D', 
-                self.convert_datetime(self.arrpil_time_entry.get()))
-            # self.add_timeline_field(timeline, 'FIRLINASH', 'D', 
-            #     self.convert_datetime(self.firline_time_entry.get()))
-            self.add_timeline_field(timeline, 'REAFORANC', 'S', self.arr_reaforanc_var.get())
-            
-            # Arrival Draft
-            draft = SubElement(arrival, 'draft')
-            self.add_draft_item(draft, 'AFT', self.arr_draft_aft_entry.get())
-            self.add_draft_item(draft, 'FWD', self.arr_draft_fwd_entry.get())
-            
-            # Arrival Pilots
-            pilots = SubElement(arrival, 'pilots')
-            pilots.set('cancelled', 'false')
-            pilot = SubElement(pilots, 'pilot')
-            pilot.set('type', 'Sea')
-            pilot.set('number', '1')
-            pilot.set('from', self.convert_datetime(self.arr_pilot_from_entry.get()))
-            pilot.set('to', self.convert_datetime(self.arr_pilot_to_entry.get()))
-            
-            # Arrival Towages
-            towages = SubElement(arrival, 'towages')
-            towages.set('cancelled', 'false')
-            
-            # 두 예인선 정보 추가
-            # tug_names = ["VB ANTARES", "VB LUSITANIA"]
-            for i, entries in enumerate(self.arr_tug_entries):
-                tug = SubElement(towages, 'tug')
-                tug.set('type', 'Sea')
-                tug.set('number', '1')
-                tug.set('from', self.convert_datetime(entries['From'].get()))
-                tug.set('to', self.convert_datetime(entries['To'].get()))
-                tug.set('comment', ' ')
-                tug.set('tugtype', 'Conventional')
-                tug.set('name', ' ')
-                tug.set('bowthrusternonop', '0')
-            
-            # Operations 정보 추가
+            # Add operations section
             operations = SubElement(generator.root, 'operations')
             
-            # Operations Timeline
-            timeline = SubElement(operations, 'timeline')
-            self.add_timeline_field(timeline, 'DOCSIDTO', 'S', self.docsidto_var.get())
-            self.add_timeline_field(timeline, 'DOCATTER', 'D', 
-                self.convert_datetime(self.docatter_entry.get()))
-            # self.add_timeline_field(timeline, 'BOAAGEONBOA', 'D', 
-            #     self.convert_datetime(self.boaageonboa_entry.get()))
-            # self.add_timeline_field(timeline, 'GANORDFOR', 'D', 
-            #     self.convert_datetime(self.ganordfor_entry.get()))
-            self.add_timeline_field(timeline, 'GANWAYDOWN', 'D', 
-                self.convert_datetime(self.ganwaydown_entry.get()))
-            self.add_timeline_field(timeline, 'OPECOM', 'D', 
-                self.convert_datetime(self.opecom_entry.get()))
-            # self.add_timeline_field(timeline, 'ESSTTIMOPSCOM', 'D', 
-            #     self.convert_datetime(self.essttimopscom_entry.get()))
-            # self.add_timeline_field(timeline, 'ENTCLECUS', 'D', 
-            #     self.convert_datetime(self.entclecus_entry.get()))
-            self.add_timeline_field(timeline, 'OPECOMP', 'D', 
-                self.convert_datetime(self.opecomp_entry.get()))
-            self.add_timeline_field(timeline, 'LASCOMP', 'D', 
-                self.convert_datetime(self.lascomp_entry.get()))
-            self.add_timeline_field(timeline, 'LASCOMPBY', 'S', self.lascompby_var.get())
+            # Add gang work time section if gang operation data exists
+            if hasattr(self, 'gang_operation_data') and self.gang_operation_data:
+                gangworktime = SubElement(operations, 'gangworktime')
+                
+                for gang_data in self.gang_operation_data:
+                    gang = SubElement(gangworktime, 'gang')
+                    
+                    # Set required attributes according to schema
+                    gang.set('number', gang_data['number'])
+                    
+                    # Convert YYYYMMDD HHMM to YYYY-MM-DDThh:mm:ss format
+                    start_dt = datetime.strptime(gang_data['start_time'], "%Y%m%d %H%M")
+                    end_dt = datetime.strptime(gang_data['end_time'], "%Y%m%d %H%M")
+                    
+                    gang.set('from', start_dt.strftime("%Y-%m-%dT%H:%M:%S"))
+                    gang.set('to', end_dt.strftime("%Y-%m-%dT%H:%M:%S"))
+                    gang.set('workingperiodpayrate', 'NORMAL')  # Required by schema
+                    gang.set('terminal', 'PNIT')  # Required by schema
             
-            # Departure 정보 추가
-            departure = SubElement(generator.root, 'departure')
-            
-            # Departure Timeline
-            timeline = SubElement(departure, 'timeline')
-            self.add_timeline_field(timeline, 'BOWTHDEP', 'S', self.bowthdep_var.get())
-            # self.add_timeline_field(timeline, 'DEPPILTUGORDFOR', 'D', 
-            #     self.convert_datetime(self.deppiltugordfor_entry.get()))
-            # self.add_timeline_field(timeline, 'BOAAGEOFFVES', 'D', 
-            #     self.convert_datetime(self.boaageoffves_entry.get()))
-            self.add_timeline_field(timeline, 'VESUNDOC', 'D', 
-                self.convert_datetime(self.vesundoc_entry.get()))
-            self.add_timeline_field(timeline, 'VESSAIFROTHIPOR', 'D', 
-                self.convert_datetime(self.vessaifrothipor_entry.get()))
-            
-            # Departure Draft
-            draft = SubElement(departure, 'draft')
-            self.add_draft_item(draft, 'AFT', self.dep_draft_aft_entry.get())
-            self.add_draft_item(draft, 'FWD', self.dep_draft_fwd_entry.get())
-            
-            # Departure Pilots
-            pilots = SubElement(departure, 'pilots')
-            pilots.set('cancelled', 'false')
-            pilot = SubElement(pilots, 'pilot')
-            pilot.set('type', 'Sea')
-            pilot.set('number', '1')
-            pilot.set('from', self.convert_datetime(self.dep_pilot_from_entry.get()))
-            pilot.set('to', self.convert_datetime(self.dep_pilot_to_entry.get()))
-            
-            # Departure Towages
-            towages = SubElement(departure, 'towages')
-            towages.set('cancelled', 'false')
-            
-            # 두 예인선 정보 추가
-            for i, entries in enumerate(self.dep_tug_entries):
-                tug = SubElement(towages, 'tug')
-                tug.set('type', 'Sea')
-                tug.set('number', '1')
-                tug.set('from', self.convert_datetime(entries['From'].get()))
-                tug.set('to', self.convert_datetime(entries['To'].get()))
-                tug.set('comment', ' ')
-                tug.set('tugtype', 'Conventional')
-                tug.set('name', ' ')
-                tug.set('bowthrusternonop', '0')
-            
-            # Discharge Details
-            discharge = SubElement(generator.root, 'dischargedetails')
-            for line in self.discharge_lines:
-                linecode = SubElement(discharge, 'linecode')
-                linecode.set('type', line['type'].get())
-                linecode.set('operator', line['operator'].get())
-                linecode.set('containersize', line['size'].get())
-                linecode.set('fullempty', line['fe'].get())
-                linecode.set('number', line['number'].get())
-                linecode.set('terminal', f"{self.portun_entry.get()}PS")
-            
-            # Load Details
-            load = SubElement(generator.root, 'loaddetails')
-            for line in self.load_lines:
-                linecode = SubElement(load, 'linecode')
-                linecode.set('type', line['type'].get())
-                linecode.set('operator', line['operator'].get())
-                linecode.set('containersize', line['size'].get())
-                linecode.set('fullempty', line['fe'].get())
-                linecode.set('number', line['number'].get())
-                linecode.set('terminal', f"{self.portun_entry.get()}PS")
-            
-            # Lid Moves
-            lidmoves = SubElement(generator.root, 'lidmoves')
-            lid = SubElement(lidmoves, 'lid')
-            lid.set('terminal', f"{self.portun_entry.get()}PS")
-            lid.set('on', self.lid_on_entry.get())
-            lid.set('off', self.lid_off_entry.get())
-            
-            # Container Shifting
-            shifting = SubElement(generator.root, 'containershifting')
-            for line in self.shifting_lines:
-                shift = SubElement(shifting, 'shift')
-                shift.set('account', line['account'].get())
-                shift.set('type', line['type'].get())
-                shift.set('containersize', line['size'].get())
-                shift.set('reason', line['reason'].get())
-                shift.set('value', line['value'].get())
-                shift.set('fullempty', line['fe'].get())
-                shift.set('oog', 'true' if line['oog'].get() else 'false')
-                shift.set('reefer', 'true' if line['reefer'].get() else 'false')
-                shift.set('imo', 'true' if line['imo'].get() else 'false')
-                shift.set('notformscaccount', 'true' if line['notformscaccount'].get() else 'false')
-            
-            # Husbandry
-            husbandry = SubElement(generator.root, 'husbandry')
-            # Husbandry 항목들은 현재 GUI에 구현되어 있지 않으므로 기본값으로 설정
-            husbandry_items = [
-                ('B', 'CASHMAST', '1', '20000.00'),
-                ('B', 'CONSVISAFE', '1', '1.00'),
-                ('B', 'SANITINSP', '1', '500.00'),
-                ('B', 'CUSUSEFEE', '1', '1.00')
-            ]
-            for item_type, code, value, cost in husbandry_items:
-                item = SubElement(husbandry, 'item')
-                item.set('type', item_type)
-                item.set('code', code)
-                item.set('value', value)
-                item.set('cost', cost)
-            
-            # Summary
-            summary = SubElement(generator.root, 'summary')
-            gang_summary = SubElement(summary, 'gangsummary')
-            
-            gangstart = SubElement(gang_summary, 'gangstart')
-            gangstart.text = self.convert_to_iso_datetime(self.gangstart_entry.get())
-            
-            gangfinish = SubElement(gang_summary, 'gangfinish')
-            gangfinish.text = self.convert_to_iso_datetime(self.gangfinish_entry.get())
-            
-            operationsstart = SubElement(gang_summary, 'operationsstart')
-            operationsstart.text = self.convert_to_iso_datetime(self.operationsstart_entry.get())
-            
-            operationsfinish = SubElement(gang_summary, 'operationsfinish')
-            operationsfinish.text = self.convert_to_iso_datetime(self.operationsfinish_entry.get())
-            
-            # Terminal Efficiency
-            terminal_efficiency = SubElement(generator.root, 'terminalefficiency')
-            # Terminal Efficiency 항목들은 현재 GUI에 구현되어 있지 않으므로 기본값으로 설정
-            efficiency_items = [
-                ('Planner_Time_Msc', '2025-03-12T16:25:00'),
-                ('Planner_Time_LP', '2025-03-12T16:25:00'),
-                ('Terminal_Time', '2025-03-14T14:26:00'),
-                ('CI_Proforma', '2.3'),
-                ('CI_Planner', '2.7'),
-                ('CI_Gang_Availability', '2.8'),
-                ('CI_Sub_Optimal', 'Crane intensity was optimal'),
-                ('Starting_Operations', 'No changes made'),
-                ('Quantity_Of_Containers', '0'),
-                ('Changes_After_Ingate', '0'),
-                ('Moved_from_Another_Terminal', '0'),
-                ('Qty_of_Containers_before_Arrival', '0'),
-                ('Live_Connections', '0'),
-                ('Reason_for_Live_Connections', 'No live connections'),
-                ('Affect_by_Cut_And_Run', '0'),
-                ('Reason_For_Cut_and_Run', 'No Cut and run'),
-                ('Average_Yard_Utilisation', '93'),
-                ('Remarks', 'Departure idle time ( weather )')
-            ]
-            for name, value in efficiency_items:
-                item = SubElement(terminal_efficiency, name)
-                item.text = value
-            
-            # XML 파일 생성
+            # Create and save XML file
             tree = ElementTree(generator.root)
-            filename = f"{generator.root.find('header/vessel').text}_{generator.root.find('header/voyage').text}_{generator.root.find('header/portun').text}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xml"
-            tree.write(filename, encoding='utf-8', xml_declaration=True)
-            
-            messagebox.showinfo("Success", "XML file generated successfully!")
+            tree.write('output.xml', encoding='utf-8', xml_declaration=True)
+            messagebox.showinfo("Success", "XML file has been generated successfully!")
             
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to generate XML: {str(e)}")
+            error_msg = f"Error generating XML: {str(e)}"
+            messagebox.showerror("Error", error_msg)
+            print(f"Debug - Error details: {str(e)}")  # For debugging
 
     def add_timeline_field(self, parent, remarkscode, type_, value):
         field = SubElement(parent, 'field')
