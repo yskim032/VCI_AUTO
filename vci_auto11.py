@@ -21,7 +21,6 @@ def parse_excel_data(data):
             # FULL 데이터 (첫 4열)
             for col_idx in range(1, min(4, len(cells))):
                 try:
-                    print(f"Processing row {row_idx}, column {col_idx}")
                     cell_value = cells[col_idx].strip()
                     count = int(cell_value) if cell_value else 0
                     if count > 0:
@@ -41,39 +40,43 @@ def parse_excel_data(data):
                             'number': count,
                             'terminal': 'PTSIEPS'
                         })
-                        print(f"Added container data for row {row_idx}, column {col_idx}")
                 except (ValueError, IndexError):
                     print(f"Error processing row {row_idx}, column {col_idx}")
                     continue
                     
-            # # EMPTY 데이터 (후반 4열)
-            # for col_idx in range(4, min(8, len(cells))):
-            #     try:
-            #         cell_value = cells[col_idx].strip()
-            #         count = int(cell_value) if cell_value else 0
-            #         if count > 0:
-            #             if row_idx == 0 and col_idx > 4:  # LOCAL
-            #                 container_type = "DIMP"
-            #                 F_E = "E"       
-            #             else:  # T/S
-            #                 if col_idx ==1 or col_idx == 2:
-            #                     container_type = "TRAN"
-            #                     F_E = "E"
-            #                 # else:
-            #                 #     container_type = "TRAN"
-            #                 #     F_E = "E"
+            # EMPTY 데이터 처리
+            empty_columns = [3, 4, 5, 6, 7]  # EMPTY 데이터가 있는 열 번호들
+            for col_idx in empty_columns:
+                try:
+                    if col_idx >= len(cells):
+                        continue
+                    cell_value = cells[col_idx].strip()
+                    count = int(cell_value) if cell_value else 0
+                    if count > 0:
+                        if row_idx == 0:  # LOCAL
+                            container_type = "DIMP"
+                            F_E = "E"
+                        else:  # T/S
+                            container_type = "TRAN"
+                            F_E = "E"
                         
-            #             size = 20 if col_idx in [4, 6] else 40
-            #             container_data.append({
-            #                 'type': container_type,
-            #                 'operator': 'MSC',
-            #                 'containersize': size,
-            #                 'fullempty': 'E',
-            #                 'number': count,
-            #                 'terminal': 'PTSIEPS'
-            #             })
-            #     except (ValueError, IndexError):
-            #         continue
+                        # EMPTY 컨테이너 크기 결정
+                        if col_idx == 5:  # 20ft EMPTY
+                            size = 20
+                        else:  # 40ft EMPTY
+                            size = 40
+                            
+                        container_data.append({
+                            'type': container_type,
+                            'operator': 'MSC',
+                            'containersize': size,
+                            'fullempty': F_E,
+                            'number': count,
+                            'terminal': 'PTSIEPS'
+                        })
+                except (ValueError, IndexError):
+                    print(f"Error processing row {row_idx}, column {col_idx}")
+                    continue
         
         return container_data
     except Exception as e:
