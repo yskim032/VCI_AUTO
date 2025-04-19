@@ -351,7 +351,7 @@ class VCIGeneratorGUI:
         for label_text, entry_name in draft_fields:
             frame = ttk.Frame(draft_frame)
             frame.pack(pady=5, fill='x')
-            ttk.Label(frame, text=label_text, width=30).pack(side='left', padx=10)
+            ttk.Label(frame, text=label_text, width=33).pack(side='left')
             entry = ttk.Entry(frame, width=6)  # 흘수값 (예: 11.45)
             entry.pack(side='left', padx=18)
             setattr(self, entry_name, entry)
@@ -717,7 +717,7 @@ class VCIGeneratorGUI:
         # 계산 버튼 추가
         calculate_button = ttk.Button(summary_frame, text="Calculate Gang Split",
                                     command=self.calculate_gang_split)
-        calculate_button.pack(side='left', padx=255)
+        calculate_button.pack(side='left', padx=315)
 
         # Gang Split 라인을 표시할 프레임
         self.gang_split_lines_frame = ttk.Frame(gang_split_frame)
@@ -763,10 +763,48 @@ class VCIGeneratorGUI:
         # 프레임 너비 설정
         gang_work_frame.configure(width=600)
         
-        # Gang Work 라인을 표시할 프레임
-        self.gang_work_lines_frame = ttk.Frame(gang_work_frame)
-        self.gang_work_lines_frame.pack(pady=5, fill='x')
-
+        # 상단 버튼과 라벨을 위한 프레임
+        top_frame = ttk.Frame(gang_work_frame)
+        top_frame.pack(pady=5, fill='x', padx=10)
+        
+        # 붙여넣기 버튼 추가
+        paste_button = ttk.Button(top_frame, text="Paste Gang Work Data",
+                                command=self.handle_gang_work_paste)
+        paste_button.pack(side='left', padx=5)
+        
+        # 빈 영역 클릭 시 붙여넣기를 위한 레이블 추가
+        empty_area = ttk.Label(top_frame, text="Click here to paste data")
+        empty_area.pack(side='left', padx=5)
+        
+        # 빈 영역 클릭 이벤트 바인딩
+        empty_area.bind('<Button-1>', lambda e: self.handle_gang_work_paste())
+        
+        # 구분선 추가
+        separator = ttk.Separator(gang_work_frame, orient='horizontal')
+        separator.pack(fill='x', padx=10, pady=5)
+        
+        # Gang Work 라인을 표시할 프레임 (스크롤 가능한 영역)
+        container_frame = ttk.Frame(gang_work_frame)
+        container_frame.pack(pady=5, fill='both', expand=True, padx=10)
+        
+        # 스크롤바 추가
+        canvas = tk.Canvas(container_frame)
+        scrollbar = ttk.Scrollbar(container_frame, orient="vertical", command=canvas.yview)
+        self.gang_work_lines_frame = ttk.Frame(canvas)
+        
+        # 스크롤 가능한 영역 설정
+        self.gang_work_lines_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=self.gang_work_lines_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        # 스크롤바와 캔버스 배치
+        scrollbar.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
+        
         # 헤더 추가
         header_frame = ttk.Frame(self.gang_work_lines_frame)
         header_frame.pack(fill='x')
@@ -776,18 +814,6 @@ class VCIGeneratorGUI:
 
         # Gang Work 라인을 저장할 리스트
         self.gang_work_lines = []
-
-        # 붙여넣기 버튼 추가
-        paste_button = ttk.Button(gang_work_frame, text="Paste Gang Work Data",
-                                command=self.handle_gang_work_paste)
-        paste_button.pack(pady=5)
-
-        # 빈 영역 클릭 시 붙여넣기를 위한 레이블 추가
-        empty_area = ttk.Label(gang_work_frame, text="Click here to paste data")
-        empty_area.pack(pady=10, expand=True, fill='both')
-        
-        # 빈 영역 클릭 이벤트 바인딩
-        empty_area.bind('<Button-1>', lambda e: self.handle_gang_work_paste())
         
         # 클립보드 바인딩 추가 (프레임 전체에 적용)
         gang_work_frame.bind('<Control-v>', lambda e: self.handle_gang_work_paste())
