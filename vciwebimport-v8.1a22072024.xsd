@@ -1806,6 +1806,7 @@
         </xs:sequence>
         <xs:attribute name="cancelled" type="xs:boolean" use="required" />
     </xs:complexType>
+
     <xs:complexType name="vesselshiftingitemtype">
         <xs:sequence>
             <xs:element name="timeline" type="shiftopstimelinetype" />
@@ -1822,6 +1823,7 @@
         <xs:attribute name="reason" type="xs:string" use="required" />
         <xs:attribute name="index" type="xs:int" use="required" />
     </xs:complexType>
+    
     <xs:complexType name="vesselshiftingtype">
         <xs:sequence>
             <xs:element name="shift" type="vesselshiftingitemtype" minOccurs="0" maxOccurs="unbounded" />
