@@ -2024,6 +2024,26 @@ class VCIGeneratorGUI:
                                 entry.insert(0, str(rounded_value))
                             except ValueError:
                                 entry.insert(0, field_value)
+                        # CI_Sub_Optimal 필드에 대한 특별 처리
+                        elif mapped_field == "CI_Sub_Optimal":
+                            try:
+                                # 문자열을 정수로 변환
+                                value = int(field_value)
+                                # 숫자에 따른 텍스트 매핑
+                                sub_optimal_mapping = {
+                                    1: "Crane intensity was optimal",
+                                    2: "Insufficient gangs",
+                                    3: "Other vessels prioritized",
+                                    4: "Saving overtime costs",
+                                    5: "Vessel had time"
+                                }
+                                # 매핑된 텍스트를 입력 필드에 표시
+                                if value in sub_optimal_mapping:
+                                    entry.insert(0, sub_optimal_mapping[value])
+                                else:
+                                    entry.insert(0, field_value)
+                            except ValueError:
+                                entry.insert(0, field_value)
                         # Average Yard Utilisation 필드에 대한 특별 처리
                         elif mapped_field == "Average_Yard_Utilisation":
                             try:
