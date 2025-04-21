@@ -4,7 +4,7 @@ from xml.etree.ElementTree import Element, SubElement, ElementTree
 from datetime import datetime, timedelta
 import re
 
-# pyinstaller -w -F --add-binary="C:/Users/kod03/AppData/Local/Programs/Python/Python311/tcl/tkdnd2.8;tkdnd2.8" vci_auto6.py
+# pyinstaller -w -F --add-binary="C:/Users/kod03/AppData/Local/Programs/Python/Python311/tcl/tkdnd2.8;tkdnd2.8" vci_auto23.py
 
 def parse_excel_data(data):
     """
