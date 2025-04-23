@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import re
 import json
 
-# pyinstaller -w -F --add-binary="C:/Users/kod03/AppData/Local/Programs/Python/Python311/tcl/tkdnd2.8;tkdnd2.8" vci_auto23.py
+# pyinstaller -w -F --add-binary="C:/Users/kod03/AppData/Local/Programs/Python/Python311/tcl/tkdnd2.8;tkdnd2.8" vci_auto28.py
 
 def parse_excel_data(data):
     """
@@ -2365,7 +2365,7 @@ class VCIGeneratorGUI:
             messagebox.showerror("Error", error_msg)
 
     def show_version_info(self):
-        messagebox.showinfo("Version 정보", "VCI Auto - Ver 1.0 by MSC KR PUS OPS")
+        messagebox.showinfo("Version 정보", "VCI Auto - Ver 1.0 by BK HB & YS")
         
     def save_to_json(self):
         try:
