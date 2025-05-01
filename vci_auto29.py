@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import re
 import json
 
-# pyinstaller -w -F --add-binary="C:/Users/kod03/AppData/Local/Programs/Python/Python311/tcl/tkdnd2.8;tkdnd2.8" vci_auto28.py
+# pyinstaller -w -F --add-binary="C:/Users/kod03/AppData/Local/Programs/Python/Python311/tcl/tkdnd2.8;tkdnd2.8" vci_auto29.py
 
 def parse_excel_data(data):
     """
